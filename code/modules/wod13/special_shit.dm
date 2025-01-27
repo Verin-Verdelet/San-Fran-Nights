@@ -113,7 +113,6 @@
 	feeding = TRUE
 	if(do_mob(user, src, 3 SECONDS))
 		feeding = FALSE
-		empty = TRUE
 		var/obj/item/drinkable_bloodpack/empty/R = new /obj/item/drinkable_bloodpack/empty(user.loc)
 		user.put_in_inactive_hand(R)
 		M.bloodpool = min(M.maxbloodpool, M.bloodpool+amount_of_bloodpoints)
@@ -150,7 +149,6 @@
 	icon_state = "blood0"
 	inhand_icon_state = "blood0"
 	empty = TRUE
-	feeding = FALSE
 
 /obj/item/blood_hunt
 	name = "Blood Hunt Announcer"
