@@ -183,11 +183,11 @@
 		suit = /obj/item/clothing/suit/vampire/coat
 		head = /obj/item/clothing/head/vampire/beanie/black
 		gloves = /obj/item/clothing/gloves/vampire/work
-		neck = list(/obj/item/clothing/neck/vampire/scarf/red,
+		neck = pick(list(/obj/item/clothing/neck/vampire/scarf/red,
 							/obj/item/clothing/neck/vampire/scarf,
 							/obj/item/clothing/neck/vampire/scarf/blue,
 							/obj/item/clothing/neck/vampire/scarf/green,
-							/obj/item/clothing/neck/vampire/scarf/white)
+							/obj/item/clothing/neck/vampire/scarf/white))
 	else
 		shoes = /obj/item/clothing/shoes/vampire/brown
 		uniform = /obj/item/clothing/under/vampire/homeless/female
