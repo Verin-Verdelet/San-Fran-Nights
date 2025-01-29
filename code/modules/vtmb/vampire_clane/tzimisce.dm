@@ -281,7 +281,7 @@
 /datum/crafting_recipe/tzi_stealth
 	name = "Stealth Skin (Invisibility)"
 	time = 50
-	reqs = list(/obj/item/stack/human_flesh = 10, /obj/item/vampire_stake = 1, /obj/item/drinkable_bloodpack = 1)
+	reqs = list(/obj/item/stack/human_flesh = 10, /obj/item/vampire_stake = 1, /obj/item/drinkable_bloodpack/full = 1)
 	result = /obj/item/dnainjector/chameleonmut
 	always_available = FALSE
 	category = CAT_TZIMISCE
@@ -289,7 +289,7 @@
 /datum/crafting_recipe/tzi_koldun
 	name = "Koldun Sorcery (Firebreath)"
 	time = 50
-	reqs = list(/obj/item/stack/human_flesh = 10, /obj/item/vampire_stake = 1, /obj/item/drinkable_bloodpack = 1)
+	reqs = list(/obj/item/stack/human_flesh = 10, /obj/item/vampire_stake = 1, /obj/item/drinkable_bloodpack/full = 1)
 	result = /obj/item/dnainjector/koldun
 	always_available = FALSE
 	category = CAT_TZIMISCE
@@ -297,10 +297,10 @@
 /datum/crafting_recipe/tzi_implant
 	name = "Implanting Flesh Device"
 	time = 50
-	reqs = list(/obj/item/stack/human_flesh = 10, /obj/item/melee/vampirearms/knife = 1, /obj/item/drinkable_bloodpack = 1)
+	reqs = list(/obj/item/stack/human_flesh = 10, /obj/item/melee/vampirearms/knife = 1, /obj/item/drinkable_bloodpack/full = 1)
 	result = /obj/item/autosurgeon/organ
 	always_available = FALSE
-	category = CAT_TZIMISCE
+	category = CAT_
 
 /datum/crafting_recipe/tzi_floor
 	name = "Gut Floor"
