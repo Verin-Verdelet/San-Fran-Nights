@@ -327,6 +327,8 @@
 		return JOB_UNAVAILABLE_GENERATION
 	if((client.prefs.generation < job.max_generation) && !bypass)
 		return JOB_UNAVAILABLE_GENERATION
+	if(!job.scale_with_pop() && !bypass)
+		return JOB_UNAVAILABLE_GENERIC
 	if (job.title == "Citizen")
 		return JOB_AVAILABLE
 	if((client.prefs.masquerade < job.minimal_masquerade) && !bypass)

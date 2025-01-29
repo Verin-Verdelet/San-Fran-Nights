@@ -39,7 +39,7 @@
 	shoes = /obj/item/clothing/shoes/vampire/white
 	suit =  /obj/item/clothing/suit/vampire/labcoat
 	gloves = /obj/item/clothing/gloves/vampire/latex
-	l_hand = /obj/item/storage/firstaid/medical
+	l_hand = /obj/item/storage/firstaid/average
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/clinic
 	r_hand = /obj/item/radio/clinic
@@ -96,7 +96,7 @@
 	shoes = /obj/item/clothing/shoes/vampire/white
 	suit =  /obj/item/clothing/suit/vampire/labcoat
 	gloves = /obj/item/clothing/gloves/vampire/latex
-	l_hand = /obj/item/storage/firstaid/medical
+	l_hand = /obj/item/storage/firstaid/average
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/clinic
 	r_hand = /obj/item/radio/clinic
@@ -107,3 +107,7 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag
 
 	skillchips = list(/obj/item/skillchip/entrails_reader, /obj/item/skillchip/quickcarry)
+
+/obj/effect/landmark/start/vcdoctor
+	name = "Chief Doctor"
+	icon_state = "Doctor"

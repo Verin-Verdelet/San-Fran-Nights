@@ -12,9 +12,15 @@
 					H.bank_id = caard.account.bank_id
 					caard.account.account_owner = H.true_real_name
 					caard.has_checked = TRUE
+		var/obj/item/passport/pass_port = locate() in b.contents
+		if(pass_port)
+			pass_port.owner_name = H.real_name
+			pass_port.owner_age = H.age
+			pass_port.owner_gender = H.gender
 
-	for(var/i in 1 to get_a_manipulation(H)+get_a_finance(H))
-		H.equip_to_slot_or_del(new /obj/item/stack/dollar/hundred(H),ITEM_SLOT_BACKPACK, TRUE)
+	if(!hobo_job)
+		for(var/i in 1 to get_a_manipulation(H)+get_a_finance(H))
+			H.equip_to_slot_or_del(new /obj/item/stack/dollar/hundred(H),ITEM_SLOT_BACKPACK, TRUE)
 
 //ID
 

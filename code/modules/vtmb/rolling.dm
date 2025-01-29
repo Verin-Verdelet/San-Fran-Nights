@@ -386,8 +386,9 @@ SUBSYSTEM_DEF(woddices)
 
 /proc/secret_vampireroll(var/dices_num = 1, var/hardness = 1, var/mob/living/rollperformer, var/stealthy = FALSE)
 	if(!dices_num)
-		create_number_on_mob(rollperformer, "#646464", "0")
-		to_chat(rollperformer, "<b>No successes!</b>")
+		if(!stealthy)
+			create_number_on_mob(rollperformer, "#646464", "0")
+			to_chat(rollperformer, "<b>No dicepool!</b>")
 		return 0
 	hardness = clamp(hardness, 1, 10)
 	var/dices_decap = rollperformer.get_health_difficulty()
@@ -403,7 +404,8 @@ SUBSYSTEM_DEF(woddices)
 			wins += 1
 		result += get_dice_image(roll, hardness)
 	wins = wins-brokes
-	to_chat(rollperformer, result)
+	if(!stealthy)
+		to_chat(rollperformer, result)
 	if(wins < 0)
 		if(!stealthy)
 			create_number_on_mob(rollperformer, "#ff0000", "Botch!")
