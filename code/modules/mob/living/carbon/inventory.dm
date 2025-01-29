@@ -203,6 +203,7 @@
 								NPC.presence_follow = FALSE
 								NPC.presence_enemies = list()
 								NPC.danger_source = null
+								NPC.add_movespeed_modifier(/datum/movespeed_modifier/npc)
 								caster.puppets -= NPC
 							if(!length(caster.puppets))
 								for(var/datum/action/presence_stay/VI in caster.actions)
@@ -218,6 +219,7 @@
 								var/datum/action/presence_deaggro/E2 = new()
 								E2.Grant(caster)
 							N.presence_master = caster
+							N.remove_movespeed_modifier(/datum/movespeed_modifier/npc)
 							N.presence_follow = TRUE
 							caster.puppets |= N
 							N.fights_anyway = TRUE
@@ -234,6 +236,7 @@
 										NPC.presence_follow = FALSE
 										NPC.presence_enemies = list()
 										NPC.danger_source = null
+										NPC.add_movespeed_modifier(/datum/movespeed_modifier/npc)
 										caster.puppets -= NPC
 									if(!length(caster.puppets))
 										for(var/datum/action/presence_stay/VI in caster.actions)
@@ -249,6 +252,7 @@
 										var/datum/action/presence_deaggro/E2 = new()
 										E2.Grant(caster)
 									N.presence_master = caster
+									N.remove_movespeed_modifier(/datum/movespeed_modifier/npc)
 									N.presence_follow = TRUE
 									caster.puppets |= N
 									N.fights_anyway = TRUE

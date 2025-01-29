@@ -983,6 +983,7 @@
 						N.presence_master = caster
 
 						N.presence_follow = TRUE
+						N.remove_movespeed_modifier(/datum/movespeed_modifier/npc)
 						caster.puppets |= N
 						var/initial_fights_anyway = N.fights_anyway
 						N.fights_anyway = TRUE
@@ -1029,6 +1030,7 @@
 	if(N && N.presence_master == caster)
 		// End presence effect
 		N.presence_master = null
+		N.add_movespeed_modifier(/datum/movespeed_modifier/npc)
 		N.presence_follow = FALSE
 		N.remove_overlay(MUTATIONS_LAYER)
 		N.presence_enemies = list()
