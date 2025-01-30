@@ -456,7 +456,7 @@
 
 /mob/living/carbon/human
 	var/last_shadow_was = TRUE
-
+/*
 /mob/living/carbon/human/proc/update_shadow()
 	if(body_position != LYING_DOWN)
 		if(!last_shadow_was)
@@ -472,7 +472,7 @@
 			last_shadow_was = FALSE
 			if(overlays_standing[UNDERSHADOW_LAYER])
 				remove_overlay(UNDERSHADOW_LAYER)
-
+*/
 /mob/living/carbon/human/npc/attack_hand(mob/user)
 	if(user)
 		if(user.a_intent == INTENT_HELP)
