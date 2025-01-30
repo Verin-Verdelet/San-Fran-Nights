@@ -938,8 +938,8 @@ SUBSYSTEM_DEF(carpool)
 				L.client.pixel_x = last_pos["x_frwd"]
 				L.client.pixel_y = last_pos["y_frwd"]
 				animate(L.client, \
-					pixel_x = last_pos["x_pix"], \
-					pixel_y = last_pos["y_pix"], \
+					pixel_x = last_pos["x_pix"] + moved_x * 2, \
+					pixel_y = last_pos["y_pix"] + moved_y * 2, \
 					SScarpool.wait, 1)
 	animate(src, pixel_x = last_pos["x_pix"]+moved_x, pixel_y = last_pos["y_pix"]+moved_y, SScarpool.wait, 1)
 	last_pos["x_frwd"] = last_pos["x_pix"] + moved_x * 2
