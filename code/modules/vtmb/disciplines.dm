@@ -474,7 +474,7 @@
 
 /mob/living/carbon/human/Move(atom/newloc, direct, glide_size_override)
 	. = ..()
-	update_shadow()
+//	update_shadow()
 	if(celerity_visual)
 		var/obj/effect/celerity/C = new(loc)
 		C.name = name
