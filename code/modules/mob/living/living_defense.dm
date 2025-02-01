@@ -32,7 +32,7 @@
 		else
 			final_block = min(10, final_block)
 			var/armah = final_block*10
-			armah = min(armah, 90)
+			armah = min(armah, 100)
 			if(armour_penetration)
 				if(penetrated_text)
 					to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")

@@ -3265,15 +3265,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.name = character.real_name
 	character.diablerist = diablerist
 
-	character.attributes.strength = Strength
-	character.attributes.dexterity = Dexterity
-	character.attributes.stamina = Stamina
-	character.attributes.charisma = Charisma
-	character.attributes.manipulation = Manipulation
-	character.attributes.appearance = Appearance
-	character.attributes.perception = Perception
-	character.attributes.intelligence = Intelligence
-	character.attributes.wits = Wits
+	var/genlimited = get_gen_attribute_limit(generation-generation_bonus)
+	if(pref_species.name != "Vampire")
+		genlimited = 5
+
+	character.attributes.strength = min(genlimited, Strength)
+	character.attributes.dexterity = min(genlimited, Dexterity)
+	character.attributes.stamina = min(genlimited, Stamina)
+	character.attributes.charisma = min(genlimited, Charisma)
+	character.attributes.manipulation = min(genlimited, Manipulation)
+	character.attributes.appearance = min(genlimited, Appearance)
+	character.attributes.perception = min(genlimited, Perception)
+	character.attributes.intelligence = min(genlimited, Intelligence)
+	character.attributes.wits = min(genlimited, Wits)
 
 	character.attributes.Alertness = Alertness
 	character.attributes.Athletics = Athletics
