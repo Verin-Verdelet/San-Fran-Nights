@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(beastmastering)
 	name = "Beastmastering"
 	init_order = INIT_ORDER_DEFAULT
-	wait = 4 SECONDS
+	wait = 2 SECONDS
 	priority = FIRE_PRIORITY_IDLE_NPC
 
 	var/list/currentrun = list()
