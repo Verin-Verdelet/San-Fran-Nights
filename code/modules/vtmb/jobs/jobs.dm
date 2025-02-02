@@ -1,5 +1,5 @@
 /datum/job
-	var/experience_addition = 1
+	var/experience_addition = 0
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H)
 	. = ..()

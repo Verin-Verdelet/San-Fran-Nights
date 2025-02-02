@@ -445,23 +445,35 @@
 		closed = TRUE
 
 /obj/structure/vampdoor/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/melee/vampirearms/sledgehammer))
-		playsound(get_turf(src), 'code/modules/wod13/sounds/get_bent.ogg', 100, FALSE)
-		var/difficulties = secret_vampireroll(get_a_strength(user)+get_a_melee(user), lockpick_difficulty, user)
-		if(difficulties == -1)
-			user.visible_message("<span class='warning'>[user] fails to break [src] with [W]!</span>", \
-						"<span class='userdanger'>You fail to break [src] with [W]!</span>")
-			user.AdjustKnockdown(60, TRUE)
-			return
-		else if(difficulties > 1)
-			var/obj/item/shield/door/D = new(get_turf(src))
-			D.icon_state = baseicon
-			var/atom/throw_target = get_edge_target_turf(src, user.dir)
-			D.throw_at(throw_target, rand(2, 4), 4, user)
-			qdel(src)
+	if(istype(W, /obj/item/melee/vampirearms/sledgehammer) && !hacking)
+		hacking = TRUE
+		for(var/mob/living/carbon/human/npc/police/P in oviewers(7, src))
+			if(P)
+				P.Aggro(user)
+		if(do_after(user, src, round(lockpick_timer/2)))
+			hacking = FALSE
+			playsound(get_turf(src), 'code/modules/wod13/sounds/get_bent.ogg', 100, FALSE)
+			var/difficulties = secret_vampireroll(get_a_strength(user)+get_a_melee(user), lockpick_difficulty, user)
+			if(difficulties == -1)
+				user.visible_message("<span class='warning'>[user] fails to break [src] with [W]!</span>", \
+							"<span class='userdanger'>You fail to break [src] with [W]!</span>")
+				user.a_intent = INTENT_HARM
+				user.ClickOn(user)
+				user.AdjustKnockdown(60, TRUE)
+				return
+			else if(difficulties > 2)
+				var/obj/item/shield/door/D = new(get_turf(src))
+				D.icon_state = baseicon
+				var/atom/throw_target = get_edge_target_turf(src, user.dir)
+				D.throw_at(throw_target, rand(2, 4), 4, user)
+				qdel(src)
+			else
+				animate(src, pixel_x = 16*sin(get_angle_raw(user.x, user.y, 0, 0, x, y, 0, 0)), pixel_y = 16*cos(get_angle_raw(user.x, user.y, 0, 0, x, y, 0, 0)), time = 5, loop = 1)
+				animate(src, pixel_x = 0, pixel_y = 0)
+				user.visible_message("<span class='warning'>[user] fails to break [src] with [W]!</span>", \
+							"<span class='userdanger'>You fail to break [src] with [W]!</span>")
 		else
-			animate(src, pixel_x = 16*sin(get_angle_raw(user.x, user.y, 0, 0, x, y, 0, 0)), pixel_y = 16*cos(get_angle_raw(user.x, user.y, 0, 0, x, y, 0, 0)), time = 5, loop = 1)
-			animate(src, pixel_x = 0, pixel_y = 0)
+			hacking = FALSE
 	if(istype(W, /obj/item/vamp/keys/hack))
 		if(locked)
 			hacking = TRUE
@@ -469,7 +481,7 @@
 			for(var/mob/living/carbon/human/npc/police/P in oviewers(7, src))
 				if(P)
 					P.Aggro(user)
-			if(do_mob(user, src, lockpick_timer))
+			if(do_after(user, src, lockpick_timer))
 				var/roll = secret_vampireroll(get_a_dexterity(user)+get_a_security(user), lockpick_difficulty, user)
 				if(roll == -1)
 					to_chat(user, "<span class='warning'>Your lockpick broke!</span>")
@@ -553,14 +565,14 @@
 	opacity = FALSE
 	baseicon = "shop"
 	glass = TRUE
-	lockpick_difficulty = 10
+	lockpick_difficulty = 7
 
 /obj/structure/vampdoor/camarilla
 	icon_state = "cam-1"
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "camarilla"
-	lockpick_difficulty = 8
+	lockpick_difficulty = 6
 
 /obj/structure/vampdoor/clerk
 	icon_state = "shop-1"
@@ -569,7 +581,7 @@
 	glass = TRUE
 	locked = TRUE
 	lock_id = "clerk"
-	lockpick_difficulty = 10
+	lockpick_difficulty = 7
 
 /obj/structure/vampdoor/prince
 	icon_state = "glass-1"
@@ -579,7 +591,7 @@
 	locked = TRUE
 	lock_id = "prince"
 	burnable = TRUE
-	lockpick_difficulty = 10
+	lockpick_difficulty = 7
 
 /obj/structure/vampdoor/daughters
 	icon_state = "wood-1"
@@ -587,7 +599,7 @@
 	locked = TRUE
 	lock_id = "daughters"
 	burnable = TRUE
-	lockpick_difficulty = 10
+	lockpick_difficulty = 7
 
 /obj/structure/vampdoor/graveyard
 	icon_state = "oldwood-1"
@@ -603,7 +615,7 @@
 	locked = TRUE
 	lock_id = "church"
 	burnable = TRUE
-	lockpick_difficulty = 10
+	lockpick_difficulty = 7
 
 /obj/structure/vampdoor/clinic
 	icon_state = "shop-1"
@@ -626,28 +638,28 @@
 	baseicon = "old"
 	locked = TRUE
 	lock_id = "archive"
-	lockpick_difficulty = 10
+	lockpick_difficulty = 7
 
 /obj/structure/vampdoor/anarch
 	icon_state = "cam-1"
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "anarch"
-	lockpick_difficulty = 10
+	lockpick_difficulty = 7
 
 /obj/structure/vampdoor/bar
 	icon_state = "cam-1"
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "bar"
-	lockpick_difficulty = 10
+	lockpick_difficulty = 7
 
 /obj/structure/vampdoor/supply
 	icon_state = "cam-1"
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "supply"
-	lockpick_difficulty = 8
+	lockpick_difficulty = 6
 
 /obj/structure/vampdoor/npc
 	icon_state = "wood-1"
@@ -701,7 +713,7 @@
 	locked = TRUE
 	lock_id = "giovanni"
 	burnable = TRUE
-	lockpick_difficulty = 8
+	lockpick_difficulty = 6
 
 /obj/structure/vampdoor/baali
 	icon_state = "oldwood-1"
@@ -709,7 +721,7 @@
 	locked = TRUE
 	lock_id = "baali"
 	burnable = FALSE
-	lockpick_difficulty = 8
+	lockpick_difficulty = 6
 
 /obj/structure/vampdoor/salubri
 	icon_state = "oldwood-1"
@@ -717,7 +729,7 @@
 	locked = TRUE
 	lock_id = "salubri"
 	burnable = FALSE
-	lockpick_difficulty = 8
+	lockpick_difficulty = 6
 
 /obj/structure/vampdoor/old_clan_tzimisce
 	icon_state = "oldwood-1"
@@ -725,7 +737,7 @@
 	locked = TRUE
 	lock_id = "old_clan_tzimisce"
 	burnable = FALSE
-	lockpick_difficulty = 8
+	lockpick_difficulty = 6
 
 /obj/structure/vampdoor/npc/Initialize()
 	. = ..()
