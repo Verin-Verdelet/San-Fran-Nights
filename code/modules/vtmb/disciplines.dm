@@ -351,7 +351,7 @@
 
 /datum/discipline/animalism/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	var/limit = min(2, level) + get_a_charisma(caster)+get_a_empathy(caster)
+	var/limit = get_a_charisma(caster)+get_a_empathy(caster)
 	if(length(caster.beastmaster) >= limit)
 		var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
 		B.death()
@@ -575,9 +575,12 @@
 	delay = 15 SECONDS
 	activate_sound = 'code/modules/wod13/sounds/dominate.ogg'
 	fearless = TRUE
+	var/obj/effect/proc_holder/spell/pointed/mind_transfer/MT
 
 /datum/discipline/dominate/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
+	if(!MT)
+		MT = new (caster)
 	if(iscathayan(target))
 		if(target.mind.dharma?.Po == "Legalist")
 			target.mind.dharma?.roll_po(caster, target)
@@ -646,12 +649,8 @@
 				if(target)
 					target.remove_movespeed_modifier(/datum/movespeed_modifier/dominate)
 		if(5)
-			if(!target.spell_immunity)
-				to_chat(target, "<span class='userdanger'><b>YOU SHOULD HARM YOURSELF NOW</b></span>")
-				caster.say("YOU SHOULD HARM YOURSELF NOW!!")
-				var/datum/cb = CALLBACK(TRGT,/mob/living/carbon/human/proc/attack_myself_command)
-				for(var/i in 1 to 20)
-					addtimer(cb, (i - 1)*15)
+			MT.cast(list(target), caster, FALSE)
+
 	spawn(2 SECONDS)
 		if(TRGT)
 			TRGT.remove_overlay(MUTATIONS_LAYER)
@@ -811,7 +810,7 @@
 //			H.Immobilize(20)
 			new /datum/hallucination/death(H, TRUE)
 		if(5)
-			var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/attack_myself_command)
+			var/datum/cb = CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, attack_myself_command))
 			for(var/i in 1 to 20)
 				addtimer(cb, (i - 1)*15)
 	spawn(delay+caster.discipline_time_plus)
@@ -961,7 +960,7 @@
 		H.caster = caster
 		switch(level_casting)
 			if(1)
-				var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/walk_to_caster)
+				var/datum/cb = CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, walk_to_caster))
 				for(var/i in 1 to 30)
 					addtimer(cb, (i - 1)*H.total_multiplicative_slowdown())
 				to_chat(target, "<span class='userlove'><b>COME HERE</b></span>")
@@ -1010,7 +1009,7 @@
 			if(4)
 				to_chat(target, "<span class='userlove'><b>FEAR ME</b></span>")
 				caster.say("FEAR ME!!")
-				var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/step_away_caster)
+				var/datum/cb = CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster))
 				for(var/i in 1 to 30)
 					addtimer(cb, (i - 1)*H.total_multiplicative_slowdown())
 				target.emote("scream")
@@ -1817,14 +1816,11 @@
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/BAT
 
 /datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	var/mod = min(4, level_casting)
 //	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
-	if(!BAT)
-		BAT = new(caster)
 	switch(mod)
 		if(1)
 			caster.physiology.burn_mod *= 1/100
@@ -1851,14 +1847,8 @@
 							qdel(G)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
 		if(4 to 5)
-			caster.drop_all_held_items()
-			BAT.Shapeshift(caster)
-			spawn(delay+caster.discipline_time_plus)
-				if(caster && caster.stat != DEAD)
-					BAT.Restore(BAT.myshape)
-					caster.Stun(15)
-					caster.do_jitter_animation(30)
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
+			var/datum/warform/Warform = new
+			Warform.transform(/mob/living/simple_animal/hostile/retaliate/bat/baali, caster, FALSE)
 
 /datum/discipline/valeren
 	name = "Valeren"
@@ -1951,7 +1941,7 @@
 	dead_restricted = FALSE
 
 /mob/living/carbon/human/proc/create_walk_to(var/max)
-	var/datum/cb = CALLBACK(src,/mob/living/carbon/human/proc/walk_to_caster)
+	var/datum/cb = CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon/human, walk_to_caster))
 	for(var/i in 1 to max)
 		addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 

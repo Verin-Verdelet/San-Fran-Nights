@@ -290,7 +290,9 @@
 			add_hard = -6
 		var/successess = secret_vampireroll(used_roll+get_a_firearms(user), 7+add_hard, user)
 		if(successess == -1)
-			target = user
+			user.drop_all_held_items()
+			user.Stun(30)
+			return
 		if(randomspread)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 		else //Smart spread
@@ -364,7 +366,9 @@
 				add_hard = -5
 			var/successess = secret_vampireroll(used_roll+get_a_firearms(user), 6+add_hard, user)
 			if(successess == -1)
-				target = user
+				user.drop_all_held_items()
+				user.Stun(30)
+				return
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 			before_firing(target,user)
 			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd, src, successess))

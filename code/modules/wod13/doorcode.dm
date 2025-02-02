@@ -450,7 +450,7 @@
 		for(var/mob/living/carbon/human/npc/police/P in oviewers(7, src))
 			if(P)
 				P.Aggro(user)
-		if(do_after(user, src, round(lockpick_timer/2)))
+		if(do_after(user, round(lockpick_timer/2), src))
 			hacking = FALSE
 			playsound(get_turf(src), 'code/modules/wod13/sounds/get_bent.ogg', 100, FALSE)
 			var/difficulties = secret_vampireroll(get_a_strength(user)+get_a_melee(user), lockpick_difficulty, user)
@@ -481,7 +481,7 @@
 			for(var/mob/living/carbon/human/npc/police/P in oviewers(7, src))
 				if(P)
 					P.Aggro(user)
-			if(do_after(user, src, lockpick_timer))
+			if(do_after(user, lockpick_timer, src))
 				var/roll = secret_vampireroll(get_a_dexterity(user)+get_a_security(user), lockpick_difficulty, user)
 				if(roll == -1)
 					to_chat(user, "<span class='warning'>Your lockpick broke!</span>")

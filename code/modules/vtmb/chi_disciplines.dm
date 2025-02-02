@@ -637,7 +637,7 @@
 
 /datum/chi_discipline/ghost_flame_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/limit = min(2, level) + get_a_charisma(caster)+get_a_empathy(caster)
+	var/limit = get_a_charisma(caster)+get_a_empathy(caster)
 	if(length(caster.beastmaster) >= limit)
 		var/mob/living/simple_animal/hostile/beastmaster/random_beast = pick(caster.beastmaster)
 		random_beast.death()
@@ -1175,7 +1175,7 @@
 			target.clear_fullscreen("yomi", 5)
 			if(ishuman(target))
 				var/mob/living/carbon/human/human_target = target
-				var/datum/cb = CALLBACK(human_target, /mob/living/carbon/human/proc/attack_myself_command)
+				var/datum/cb = CALLBACK(human_target, TYPE_PROC_REF(/mob/living/carbon/human, attack_myself_command))
 				for(var/i in 1 to 20)
 					addtimer(cb, (i - 1) * 1.5 SECONDS)
 				target.emote("scream")
@@ -1261,14 +1261,14 @@
 			target.emote("stare")
 			if(ishuman(target))
 				var/mob/living/carbon/human/human_target = target
-				var/datum/cb = CALLBACK(human_target, /mob/living/carbon/human/proc/combat_to_caster)
+				var/datum/cb = CALLBACK(human_target, TYPE_PROC_REF(/mob/living/carbon/human, combat_to_caster))
 				for(var/i in 1 to 20)
 					addtimer(cb, (i - 1) * 1.5 SECONDS)
 		if(3)
 			target.emote("scream")
 			if(ishuman(target))
 				var/mob/living/carbon/human/human_target = target
-				var/datum/cb = CALLBACK(human_target, /mob/living/carbon/human/proc/step_away_caster)
+				var/datum/cb = CALLBACK(human_target, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster))
 				for(var/i in 1 to 20)
 					addtimer(cb, (i - 1) * 1.5 SECONDS)
 		if(4)
@@ -1329,7 +1329,7 @@
 
 /datum/chi_discipline/beast_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/limit = min(2, level) + get_a_charisma(caster)+get_a_empathy(caster)
+	var/limit = get_a_charisma(caster)+get_a_empathy(caster)
 	if(length(caster.beastmaster) >= limit)
 		var/mob/living/simple_animal/hostile/beastmaster/random_beast = pick(caster.beastmaster)
 		random_beast.death()
@@ -1382,8 +1382,6 @@
 	delay = 12 SECONDS
 	cost_yang = 1
 	activate_sound = 'code/modules/wod13/sounds/smokeshintai_activate.ogg'
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/smoke_form/smoke_shapeshift
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/hidden_smoke_form/hidden_smoke_shapeshift
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/smoke_form
 	name = "Smoke Form"
@@ -1437,10 +1435,6 @@
 
 /datum/chi_discipline/smoke_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	if(!smoke_shapeshift)
-		smoke_shapeshift = new(caster)
-	if(!hidden_smoke_shapeshift)
-		hidden_smoke_shapeshift = new(caster)
 	switch(level_casting)
 		if(1)
 			var/datum/effect_system/smoke_spread/bad/smoke = new
@@ -1496,23 +1490,13 @@
 				qdel(visual2)
 				qdel(visual3)
 		if(4)
-			smoke_shapeshift.Shapeshift(caster)
-			var/mob/living/simple_animal/hostile/host = smoke_shapeshift.myshape
-			host.my_creator = null
 			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
-			spawn(delay+caster.discipline_time_plus)
-				if(caster && caster.stat != DEAD)
-					smoke_shapeshift.Restore(smoke_shapeshift.myshape)
-					caster.Stun(1.5 SECONDS)
+			var/datum/warform/Warform = new
+			Warform.transform(/mob/living/simple_animal/hostile/smokecrawler, caster, TRUE)
 		if(5)
-			hidden_smoke_shapeshift.Shapeshift(caster)
-			var/mob/living/simple_animal/hostile/host = hidden_smoke_shapeshift.myshape
-			host.my_creator = null
 			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
-			spawn(30 SECONDS + caster.discipline_time_plus)
-				if(caster && caster.stat != DEAD)
-					hidden_smoke_shapeshift.Restore(hidden_smoke_shapeshift.myshape)
-					caster.Stun(1.5 SECONDS)
+			var/datum/warform/Warform = new
+			Warform.transform(/mob/living/simple_animal/hostile/smokecrawler/hidden, caster, TRUE)
 
 /datum/chi_discipline/storm_shintai
 	name = "Storm Shintai"
