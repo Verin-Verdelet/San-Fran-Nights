@@ -676,7 +676,9 @@
 				caster.say("YOU SHOULD KILL YOURSELF NOW!!")
 				target.Immobilize(5 SECONDS, TRUE)
 				if(do_mob(target, target, 6 SECONDS))
-					target.suicide()
+					if(ishuman(target))
+						var/mob/living/carbon/human/suicider = target
+						suicider.suicide()
 
 	spawn(2 SECONDS)
 		if(TRGT)
