@@ -1687,13 +1687,17 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage_amount)
 		if(BURN)
-			H.damageoverlaytemp = 20
-			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
-			if(BP)
-				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
-					H.update_damage_overlays()
+			if(iskindred(H) || iscathayan(H))
+				var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.burn_mod
+				H.adjustCloneLoss(damage_amount)
 			else
-				H.adjustFireLoss(damage_amount)
+				H.damageoverlaytemp = 20
+				var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
+				if(BP)
+					if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
+						H.update_damage_overlays()
+				else
+					H.adjustFireLoss(damage_amount)
 		if(TOX)
 			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.tox_mod
 			H.adjustToxLoss(damage_amount)
