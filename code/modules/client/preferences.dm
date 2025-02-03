@@ -256,6 +256,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/Linguistics = 0
 	var/Occult = 0
 
+	var/old_enough_to_get_exp = FALSE
+
 /datum/preferences/proc/add_experience(amount)
 	true_experience = clamp(true_experience + amount, 0, 1000)
 

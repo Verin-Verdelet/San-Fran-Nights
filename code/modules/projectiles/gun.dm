@@ -353,10 +353,10 @@
 					to_chat(user, "<span class='warning'>[src] is lethally chambered! You don't want to risk harming anyone...</span>")
 					return
 			var/used_roll = get_a_dexterity(user)
-			if(ishuman(user))
-				var/mob/living/carbon/human/humhuman = user
-				if(humhuman.binocling)
-					used_roll = get_a_perception(user)
+//			if(ishuman(user))
+//				var/mob/living/carbon/human/humhuman = user
+//				if(humhuman.binocling)
+//					used_roll = get_a_perception(user)
 			var/add_hard = 0
 			if(user.zone_selected == BODY_ZONE_HEAD)
 				add_hard = 1

@@ -361,6 +361,9 @@
 		if(-INFINITY to LOCKDIFFICULTY_2) //LOCKDIFFICULTY_1 is basically the minimum so we can just do LOCKTIMER_1 from -INFINITY
 			lockpick_timer = LOCKTIMER_1
 
+/obj/structure/vampdoor
+	var/last_investigation = 0
+
 /obj/structure/vampdoor/examine(mob/user)
 	. = ..()
 	if(!ishuman(user))
@@ -384,6 +387,19 @@
 		if(8 to INFINITY) //Becomes guaranteed to lockpick at 9.
 			message = "<span class='nicegreen'>This door is really simple to you. It should be very easy to lockpick it.</span>"
 	. += "[message]"
+	if(isliving(user) && last_investigation <= world.time)
+		last_investigation = world.time+30 SECONDS
+		var/investigation_check = secret_vampireroll(get_a_intelligence(user)+get_a_investigation(user), 6, user)
+		if(investigation_check >= 3)
+			var/keys_that_can_open = ""
+			for(var/i in subtypesof(/obj/item/vamp/keys))
+				var/obj/item/vamp/keys/K = i
+				if(lock_id in initial(K.accesslocks))
+					if(keys_that_can_open == "")
+						keys_that_can_open += initial(K.name)
+					else
+						keys_that_can_open += ", [initial(K.name)]"
+			to_chat(user, "You can open that door with: [keys_that_can_open]")
 
 /obj/structure/vampdoor/attack_hand(mob/user)
 	. = ..()

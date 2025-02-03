@@ -137,6 +137,9 @@
 /datum/discipline/proc/post_gain(var/mob/living/carbon/human/H)
 	return
 
+/atom
+	var/last_investigated = 0
+
 /atom/examine(mob/user)
 	. = ..()
 	if(ishuman(user))
@@ -202,6 +205,15 @@
 					to_chat(user, "[finger]")
 				found_something = TRUE
 
+			//Killer
+			if(isliving(src))
+				var/mob/living/LivedYoung = src
+				if(LivedYoung.lastattacker)
+					for(var/mob/living/carbon/human/huLi in GLOB.player_list)
+						if(huLi?.dna?.real_name == LivedYoung.lastattacker)
+							to_chat(user, "<span class='info'><B>Aggressive prints:</B> [md5(huLi.dna.uni_identity)]</span>")
+							found_something = TRUE
+
 			// Blood
 			if (length(blood))
 				to_chat(user, "<span class='info'><B>Blood:</B></span>")
@@ -226,8 +238,9 @@
 			if(!found_something)
 				to_chat(user, "<I># No forensic traces found #</I>") // Don't display this to the holder user
 			return
-		else if(isobj(src) || ismob(src))
-			if(secret_vampireroll(get_a_perception(user)+get_a_investigation(user), 6, user) < 4)
+		else if((isobj(src) || ismob(src)) && last_investigated <= world.time)
+			last_investigated = world.time+30 SECONDS
+			if(secret_vampireroll(get_a_perception(user)+get_a_investigation(user), 6, user) < 3)
 				return
 
 			var/list/fingerprints = list()
@@ -250,6 +263,14 @@
 					to_chat(user, "[finger]")
 				found_something = TRUE
 
+			//Killer
+			if(isliving(src))
+				var/mob/living/LivedYoung = src
+				if(LivedYoung.lastattacker)
+					for(var/mob/living/carbon/human/huLi in GLOB.player_list)
+						if(huLi?.dna?.real_name == LivedYoung.lastattacker)
+							to_chat(user, "<span class='info'><B>Aggressive prints:</B> [md5(huLi.dna.uni_identity)]</span>")
+							found_something = TRUE
 			//Fibers
 			if(length(fibers))
 				to_chat(user, "<span class='info'><B>Fibers:</B></span>")
@@ -651,11 +672,11 @@
 		if(5)
 //			MT.cast(list(target), caster, FALSE)
 			if(!target.spell_immunity)
-				to_chat(target, "<span class='userdanger'><b>YOU SHOULD HARM YOURSELF NOW</b></span>")
-				caster.say("YOU SHOULD HARM YOURSELF NOW!!")
-				var/datum/cb = CALLBACK(TRGT,TYPE_PROC_REF(/mob/living/carbon/human, attack_myself_command))
-				for(var/i in 1 to 20)
-					addtimer(cb, (i - 1)*15)
+				to_chat(target, "<span class='userdanger'><b>YOU SHOULD KILL YOURSELF NOW</b></span>")
+				caster.say("YOU SHOULD KILL YOURSELF NOW!!")
+				target.Immobilize(5 SECONDS, TRUE)
+				if(do_mob(target, target, 6 SECONDS))
+					target.suicide()
 
 	spawn(2 SECONDS)
 		if(TRGT)

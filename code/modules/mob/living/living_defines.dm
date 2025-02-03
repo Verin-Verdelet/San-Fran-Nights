@@ -241,6 +241,7 @@
 	var/last_drinkblood_click = 0
 	var/harm_focus = SOUTH
 	var/masquerade_votes = 0
+	var/list/masquerade_voters = list()
 	var/list/voted_for = list()
 	var/flavor_text
 	var/true_real_name

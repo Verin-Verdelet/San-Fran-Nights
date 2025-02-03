@@ -252,12 +252,18 @@
 			if(V.upper)
 				icon_state = "[initial(icon_state)]-snow"
 
+/obj/structure/trashcan
+	var/last_investigation = 0
+
 /obj/structure/trashcan/attack_hand(mob/living/user)
 	. = ..()
+	if(last_investigation > world.time)
+		return
 	if(!searching)
 		searching = TRUE
 		if(do_mob(user, src, 20 SECONDS))
 			searching = FALSE
+			last_investigation = world.time+30 SECONDS
 			var/result = secret_vampireroll(get_a_perception(user)+get_a_investigation(user), 6, user)
 			switch(result)
 				if(-1)
