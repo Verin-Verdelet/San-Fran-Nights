@@ -2,7 +2,7 @@
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null, armour_penetration, penetrated_text, silent=FALSE)
 	var/armor = getarmor(def_zone, attack_flag)
 
-	var/total_cubes = max(0, armor)
+	var/total_cubes = armor
 
 	if(invisibility == INVISIBILITY_LEVEL_OBFUSCATE)
 		invisibility = initial(invisibility)
@@ -22,7 +22,7 @@
 	total_cubes += get_fortitude_dices(src)+get_visceratika_dices(src)+get_bloodshield_dices(src)+get_lasombra_dices(src)+get_tzimisce_dices(src)
 
 	if(attack_flag == BASHING || attack_flag == LETHAL || attack_flag == AGGRAVATED)
-		var/final_block = secret_vampireroll(total_cubes, 4, src, silent)
+		var/final_block = secret_vampireroll(total_cubes, 5, src, silent)
 		if(final_block == -1)
 			if(penetrated_text)
 				to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
@@ -30,21 +30,19 @@
 				to_chat(src, "<span class='userdanger'>Your armor was penetrated!</span>")
 			return 0
 		else
-			final_block = min(10, final_block)
-			var/armah = final_block*10
-			armah = min(armah, 100)
+			var/armah = final_block*20
 			if(armour_penetration)
 				if(penetrated_text)
 					to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
 				else
 					to_chat(src, "<span class='userdanger'>Your armor was penetrated!</span>")
-				return max(0, armah-armour_penetration)
+				return max(0, armah)
 			else if(armah >= 100)
 				if(absorb_text)
 					to_chat(src, "<span class='notice'>[absorb_text]</span>")
 				else
 					to_chat(src, "<span class='notice'>Your armor absorbs the blow!</span>")
-				return 100
+				return armah
 	else
 		if(armor <= 0)
 			return armor

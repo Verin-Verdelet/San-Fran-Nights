@@ -870,26 +870,27 @@ SUBSYSTEM_DEF(carpool)
 			z
 		)
 		for(var/turf/T in get_line(src, check_turf_ahead))
-			if(length(T.unpassable))
-				for(var/contact in T.unpassable)
-					//make NPC move out of car's way
-					if(istype(contact, /mob/living/carbon/human/npc))
-						var/mob/living/carbon/human/npc/NPC = contact
-						if(COOLDOWN_FINISHED(NPC, car_dodge) && !HAS_TRAIT(NPC, TRAIT_INCAPACITATED))
-							var/list/dodge_direction = list(
-								SIMPLIFY_DEGREES(movement_vector + 45),
-								SIMPLIFY_DEGREES(movement_vector - 45),
-								SIMPLIFY_DEGREES(movement_vector + 90),
-								SIMPLIFY_DEGREES(movement_vector - 90),
-							)
-							for(var/angle in dodge_direction)
-								if(get_step(NPC, angle2dir(angle)).density)
-									dodge_direction.Remove(angle)
-							if(length(dodge_direction))
-								step(NPC, angle2dir(pick(dodge_direction)), NPC.total_multiplicative_slowdown())
-								COOLDOWN_START(NPC, car_dodge, 2 SECONDS)
-								if(prob(50))
-									NPC.RealisticSay(pick(NPC.socialrole.car_dodged))
+			if(T)
+				if(length(T.unpassable))
+					for(var/contact in T.unpassable)
+						//make NPC move out of car's way
+						if(istype(contact, /mob/living/carbon/human/npc))
+							var/mob/living/carbon/human/npc/NPC = contact
+							if(COOLDOWN_FINISHED(NPC, car_dodge) && !HAS_TRAIT(NPC, TRAIT_INCAPACITATED))
+								var/list/dodge_direction = list(
+									SIMPLIFY_DEGREES(movement_vector + 45),
+									SIMPLIFY_DEGREES(movement_vector - 45),
+									SIMPLIFY_DEGREES(movement_vector + 90),
+									SIMPLIFY_DEGREES(movement_vector - 90),
+								)
+								for(var/angle in dodge_direction)
+									if(get_step(NPC, angle2dir(angle)).density)
+										dodge_direction.Remove(angle)
+								if(length(dodge_direction))
+									step(NPC, angle2dir(pick(dodge_direction)), NPC.total_multiplicative_slowdown())
+									COOLDOWN_START(NPC, car_dodge, 2 SECONDS)
+									if(prob(50))
+										NPC.RealisticSay(pick(NPC.socialrole.car_dodged))
 		var/turf/hit_turf
 		var/list/in_line = get_line(src, check_turf)
 		for(var/turf/T in in_line)
