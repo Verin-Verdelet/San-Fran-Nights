@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(city_time)
 						var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
 						if(P)
 							P.old_enough_to_get_exp = TRUE
-							if(!iskindred(H) && !iscathayan(H) && !isgarou(H))
+							if(!iskindred(H) && !isghoul(H) && !iscathayan(H) && !isgarou(H))
 								P.add_experience(10)
 //							P.add_experience(get_a_intelligence(H))
 							if(H.mind)
