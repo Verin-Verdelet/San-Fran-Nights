@@ -76,6 +76,9 @@
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+	if(iskindred(src) || iscathayan(src))
+		adjustCloneLoss(amount, updating_health, forced)
+		return amount
 	if(amount > 0)
 		take_overall_damage(0, amount, 0, updating_health, required_status)
 	else
