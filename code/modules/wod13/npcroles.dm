@@ -947,7 +947,7 @@
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
 		if(H.bloodpool)
-			if(prob(10))
+			if(prob(5))
 				H.bloodpool = max(0, H.bloodpool-1)
 				beastmaster.bloodpool = min(beastmaster.maxbloodpool, beastmaster.bloodpool+1)
 
