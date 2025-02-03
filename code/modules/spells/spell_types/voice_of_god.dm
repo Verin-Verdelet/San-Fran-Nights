@@ -43,7 +43,7 @@
 		speech_vary = FALSE
 		reverb = TRUE
 	else
-		speech_sound = 'sound/magic/clockwork/invoke_general.ogg'
+		speech_sound = 'code/modules/wod13/sounds/presence_activate.ogg'
 		speech_volume = 200
 		speech_vary = TRUE
 		reverb = FALSE
