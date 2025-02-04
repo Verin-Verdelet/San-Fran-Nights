@@ -648,11 +648,14 @@
 								HUY.put_in_active_hand(item_to_pick)
 							return
 				else
-					if(isturf(HUY.loc) && get_a_perception(HUY)+get_a_alertness(HUY) > 4)
+					if(isturf(HUY.loc) && get_a_perception(HUY)+get_a_alertness(HUY) >= 4)
 						HUY.binocling = !HUY.binocling
 						if(!HUY.binocling)
+							to_chat(HUY, "<span class='notice'>You are no more looking far away...</span>")
 							HUY.client.pixel_x = 0
 							HUY.client.pixel_y = 0
+						else
+							to_chat(HUY, "<span class='notice'>You are looking far away.</span>")
 		if(HUY.warform)
 			if(istype(src, /obj) || istype(src, /mob))
 				if(Adjacent(HUY.warform.warform))

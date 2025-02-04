@@ -625,6 +625,7 @@
 	var/mypower = secret_vampireroll(max(get_a_strength(caster), get_a_manipulation(caster))+get_a_intimidation(caster), difficulties_dominating, caster)
 	if(mypower < 3)
 		to_chat(caster, "<span class='warning'>You fail at dominating!</span>")
+		caster.emote("stare")
 		if(mypower == -1)
 			caster.Stun(3 SECONDS)
 			caster.do_jitter_animation(10)
@@ -795,16 +796,13 @@
 	//5 - victim starts to attack themself
 	if(target.spell_immunity)
 		return
-	var/mypower = secret_vampireroll(max(get_a_manipulation(caster), get_a_intelligence(caster))+max(get_a_empathy(caster), get_a_intimidation(caster)), 6, caster)
-	if(mypower < 1)
+	var/mypower = secret_vampireroll(max(get_a_manipulation(caster), get_a_intelligence(caster))+max(get_a_empathy(caster), get_a_intimidation(caster)), get_a_wits(target)+2, caster)
+	if(mypower < 3)
 		to_chat(caster, "<span class='warning'>You fail at corrupting!</span>")
+		caster.emote("stare")
 		if(mypower == -1)
 			caster.Stun(3 SECONDS)
 			caster.do_jitter_animation(10)
-		return
-	var/theirpower = secret_vampireroll(get_a_wits(target)+get_a_alertness(target), 4+mypower-(caster.generation-target.generation), target)
-	if(theirpower >= 2)
-		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to corrupt!</span>")
 		return
 	if(!ishuman(target))
 		to_chat(caster, "<span class='warning'>[target] doesn't have enough mind to get affected by this discipline!</span>")
@@ -973,6 +971,7 @@
 	var/mypower = secret_vampireroll(max(get_a_charisma(caster), get_a_appearance(caster))+get_a_empathy(caster), get_a_wits(target)+2, caster)
 	if(mypower < 3)
 		to_chat(caster, "<span class='warning'>You fail at sway!</span>")
+		caster.emote("stare")
 		if(mypower == -1)
 			caster.Stun(3 SECONDS)
 			caster.do_jitter_animation(10)
