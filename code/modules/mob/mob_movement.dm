@@ -104,6 +104,7 @@
 			H.warform.warform.Move(get_step(H.warform.warform, direct), direct)
 			H.warform.warform.dir = direct
 			H.dir = direct
+			H.handle_gravity()
 			if(H.warform.warform.lying_angle != H.lying_angle)
 				var/matrix/Matrix = matrix()
 				Matrix.Turn(H.lying_angle)

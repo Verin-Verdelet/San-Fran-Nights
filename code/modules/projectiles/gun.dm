@@ -290,8 +290,7 @@
 			add_hard = -6
 		var/successess = secret_vampireroll(used_roll+get_a_firearms(user), 7+add_hard, user)
 		if(successess == -1)
-			user.drop_all_held_items()
-			user.Stun(30)
+			shoot_with_empty_chamber(user)
 			return
 		if(randomspread)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
@@ -366,8 +365,7 @@
 				add_hard = -5
 			var/successess = secret_vampireroll(used_roll+get_a_firearms(user), 6+add_hard, user)
 			if(successess == -1)
-				user.drop_all_held_items()
-				user.Stun(30)
+				shoot_with_empty_chamber(user)
 				return
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 			before_firing(target,user)

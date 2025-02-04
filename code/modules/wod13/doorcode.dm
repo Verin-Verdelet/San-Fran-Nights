@@ -474,7 +474,6 @@
 				user.visible_message("<span class='warning'>[user] fails to break [src] with [W]!</span>", \
 							"<span class='userdanger'>You fail to break [src] with [W]!</span>")
 				user.a_intent = INTENT_HARM
-				user.ClickOn(user)
 				user.AdjustKnockdown(60, TRUE)
 				return
 			else if(difficulties > 2)

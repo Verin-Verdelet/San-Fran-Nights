@@ -439,7 +439,7 @@
 	if(!HAS_TRAIT(caster, TRAIT_NIGHT_VISION))
 		ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
 		loh = TRUE
-	caster.see_invisible = SEE_INVISIBLE_LEVEL_OBFUSCATE
+	caster.see_invisible = SEE_INVISIBLE_LEVEL_OBFUSCATE+level_casting
 	caster.update_sight()
 	caster.add_client_colour(/datum/client_colour/glass_colour/lightblue)
 	var/shitcasted = FALSE
@@ -616,19 +616,18 @@
 	if(HAS_TRAIT(caster, TRAIT_MUTE))
 		to_chat(caster, "<span class='warning'>You find yourself unable to speak!</span>")
 		return
-	var/mypower = secret_vampireroll(max(get_a_strength(caster), get_a_manipulation(caster))+get_a_intimidation(caster), 6, caster)
-	if(mypower < 1)
+	if(target.generation < caster.generation)
+		to_chat(caster, "<span class='warning'>[target]'s blood is too potence to dominate!</span>")
+		return
+	var/difficulties_dominating = get_a_wits(target)+2
+	if(dominate_me)
+		difficulties_dominating = 1
+	var/mypower = secret_vampireroll(max(get_a_strength(caster), get_a_manipulation(caster))+get_a_intimidation(caster), difficulties_dominating, caster)
+	if(mypower < 3)
 		to_chat(caster, "<span class='warning'>You fail at dominating!</span>")
 		if(mypower == -1)
 			caster.Stun(3 SECONDS)
 			caster.do_jitter_animation(10)
-		return
-	var/difficulty = 4+mypower-(caster.generation-target.generation)
-	if(dominate_me)
-		difficulty = 10
-	var/theirpower = secret_vampireroll(get_a_wits(target)+get_a_alertness(target), difficulty, target)
-	if(theirpower >= 2)
-		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to dominate!</span>")
 		return
 	var/mob/living/carbon/human/TRGT
 	if(ishuman(target))
@@ -886,13 +885,16 @@
 	delay = 30 SECONDS
 	activate_sound = 'code/modules/wod13/sounds/fortitude_activate.ogg'
 
+/datum/discipline/fortitude/post_gain(mob/living/carbon/human/H)
+	H.attributes.passive_fortitude = level
+
 /datum/discipline/fortitude/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 //	caster.remove_overlay(FORTITUDE_LAYER)
 //	var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "fortitude", -FORTITUDE_LAYER)
 //	caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
 //	caster.apply_overlay(FORTITUDE_LAYER)
-	caster.attributes.fortitude_bonus = level_casting*2
+	caster.attributes.fortitude_bonus = level_casting
 	spawn(delay+caster.discipline_time_plus)
 		if(caster)
 			caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/fortitude_deactivate.ogg', 50, FALSE)
@@ -905,9 +907,8 @@
 	icon_state = "obfuscate"
 	cost = 1
 	ranged = FALSE
-	delay = 10 SECONDS
+	delay = 30 SECONDS
 	activate_sound = 'code/modules/wod13/sounds/obfuscate_activate.ogg'
-	leveldelay = TRUE
 
 /datum/discipline/obfuscate/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
@@ -915,15 +916,16 @@
 		if(NPC)
 			if(NPC.danger_source == caster)
 				NPC.danger_source = null
-	caster.invisibility = INVISIBILITY_LEVEL_OBFUSCATE
+	caster.invisibility = INVISIBILITY_LEVEL_OBFUSCATE+level_casting
 	caster.alpha = 100
 	caster.obfuscate_level = level_casting
-	spawn((delay*level_casting)+caster.discipline_time_plus)
-		if(caster)
-			if(caster.invisibility != initial(caster.invisibility))
-				caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
-				caster.invisibility = initial(caster.invisibility)
-				caster.alpha = 255
+	if(level_casting != 1)
+		spawn((delay)+caster.discipline_time_plus)
+			if(caster)
+				if(caster.invisibility != initial(caster.invisibility))
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
+					caster.invisibility = initial(caster.invisibility)
+					caster.alpha = 255
 
 /datum/discipline/presence
 	name = "Presence"
@@ -968,16 +970,12 @@
 	if(iscathayan(target))
 		if(target.mind.dharma?.Po == "Legalist")
 			target.mind.dharma?.roll_po(caster, target)
-	var/mypower = secret_vampireroll(max(get_a_charisma(caster), get_a_appearance(caster))+get_a_empathy(caster), 6, caster)
-	if(mypower < 1)
+	var/mypower = secret_vampireroll(max(get_a_charisma(caster), get_a_appearance(caster))+get_a_empathy(caster), get_a_wits(target)+2, caster)
+	if(mypower < 3)
 		to_chat(caster, "<span class='warning'>You fail at sway!</span>")
 		if(mypower == -1)
 			caster.Stun(3 SECONDS)
 			caster.do_jitter_animation(10)
-		return
-	var/theirpower = secret_vampireroll(get_a_wits(target)+get_a_alertness(target), 4+mypower-(caster.generation-target.generation), target)
-	if(theirpower >= 2)
-		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to sway!</span>")
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target

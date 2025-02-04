@@ -4,7 +4,7 @@
 
 	var/total_cubes = armor
 
-	if(invisibility == INVISIBILITY_LEVEL_OBFUSCATE)
+	if(invisibility <= INVISIBILITY_LEVEL_OBFUSCATE+5 && invisibility != initial(invisibility))
 		invisibility = initial(invisibility)
 		alpha = 255
 		playsound_local(loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)

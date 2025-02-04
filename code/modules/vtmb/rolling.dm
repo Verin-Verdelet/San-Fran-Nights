@@ -132,6 +132,7 @@ SUBSYSTEM_DEF(woddices)
 	var/Occult = 0
 
 	var/fortitude_bonus = 0
+	var/passive_fortitude = 0
 	var/potence_bonus = 0
 	var/visceratika_bonus = 0
 	var/bloodshield_bonus = 0
@@ -171,7 +172,7 @@ SUBSYSTEM_DEF(woddices)
 
 /proc/get_fortitude_dices(mob/living/Living)
 	if(Living.attributes)
-		return Living.attributes.fortitude_bonus
+		return Living.attributes.fortitude_bonus+Living.attributes.passive_fortitude
 	else
 		return 0
 

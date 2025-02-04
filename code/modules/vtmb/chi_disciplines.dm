@@ -697,7 +697,7 @@
 	var/loop_started_time = world.time
 	while (world.time <= (loop_started_time + duration))
 		for(var/mob/living/carbon/burned_mob in oviewers(3, caster))
-			burned_mob.adjustFireLoss(5, TRUE)
+			burned_mob.adjustFireLoss(10, TRUE)
 			burned_mob.adjust_bodytemperature(15)
 
 		sleep(2 SECONDS)

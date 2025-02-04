@@ -333,7 +333,7 @@
 
 					if(H.reagents)
 						if(length(H.reagents.reagent_list))
-							H.reagents.trans_to(BLOODBONDED, min(10, H.reagents.total_volume), transfered_by = H, methods = VAMPIRE)
+							H.reagents.trans_to(BLOODBONDED, min(5, H.reagents.total_volume), transfered_by = H, methods = VAMPIRE)
 					BLOODBONDED.adjustBruteLoss(-25, TRUE)
 					if(length(BLOODBONDED.all_wounds))
 						var/datum/wound/W = pick(BLOODBONDED.all_wounds)
