@@ -12,14 +12,13 @@
 	if(CheckMove(hardlock = TRUE))
 		return
 	if(danger_source != M)
-		var/theirpower = secret_vampireroll(max(get_a_manipulation(M), get_a_strength(M))+get_a_intimidation(M), 6, M)
+		var/theirpower = secret_vampireroll(max(get_a_manipulation(M), get_a_strength(M))+get_a_intimidation(M), get_a_wits(src)+2, M)
 		if(theirpower == -1)
 			fights_anyway = TRUE
 			if(!my_weapon)
 				my_weapon = new /obj/item/gun/ballistic/automatic/vampire/deagle(src)
 		else if(fights_anyway || my_weapon)
-			var/mypower = secret_vampireroll(get_a_wits(src)+get_a_alertness(src), 4+theirpower, src)
-			if(mypower < 3)
+			if(theirpower >= 3)
 				fights_anyway = FALSE
 				QDEL_NULL(my_weapon)
 				my_weapon = null
