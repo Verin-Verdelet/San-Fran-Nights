@@ -2339,39 +2339,39 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						reset_stats(TRUE)
 
 				if("strength")
-					if(handle_upgrade(Strength, Strength * 5, get_gen_attribute_limit(generation), "Physical"))
+					if(handle_upgrade(Strength, Strength * 5, get_gen_attribute_limit(generation-generation_bonus), "Physical"))
 						Strength++
 
 				if("dexterity")
-					if(handle_upgrade(Dexterity, Dexterity * 5, get_gen_attribute_limit(generation), "Physical"))
+					if(handle_upgrade(Dexterity, Dexterity * 5, get_gen_attribute_limit(generation-generation_bonus), "Physical"))
 						Dexterity++
 
 				if("stamina")
-					if(handle_upgrade(Stamina, Stamina * 5, get_gen_attribute_limit(generation), "Physical"))
+					if(handle_upgrade(Stamina, Stamina * 5, get_gen_attribute_limit(generation-generation_bonus), "Physical"))
 						Stamina++
 
 				if("charisma")
-					if(handle_upgrade(Charisma, Charisma * 5, get_gen_attribute_limit(generation), "Social"))
+					if(handle_upgrade(Charisma, Charisma * 5, get_gen_attribute_limit(generation-generation_bonus), "Social"))
 						Charisma++
 
 				if("manipulation")
-					if(handle_upgrade(Manipulation, Manipulation * 5, get_gen_attribute_limit(generation), "Social"))
+					if(handle_upgrade(Manipulation, Manipulation * 5, get_gen_attribute_limit(generation-generation_bonus), "Social"))
 						Manipulation++
 
 				if("appearance")
-					if(handle_upgrade(Appearance, Appearance * 5, get_gen_attribute_limit(generation), "Social"))
+					if(handle_upgrade(Appearance, Appearance * 5, get_gen_attribute_limit(generation-generation_bonus), "Social"))
 						Appearance++
 
 				if("perception")
-					if(handle_upgrade(Perception, Perception * 5, get_gen_attribute_limit(generation), "Mental"))
+					if(handle_upgrade(Perception, Perception * 5, get_gen_attribute_limit(generation-generation_bonus), "Mental"))
 						Perception++
 
 				if("intelligence")
-					if(handle_upgrade(Intelligence, Intelligence * 5, get_gen_attribute_limit(generation), "Mental"))
+					if(handle_upgrade(Intelligence, Intelligence * 5, get_gen_attribute_limit(generation-generation_bonus), "Mental"))
 						Intelligence++
 
 				if("wits")
-					if(handle_upgrade(Wits, Wits * 5, get_gen_attribute_limit(generation), "Mental"))
+					if(handle_upgrade(Wits, Wits * 5, get_gen_attribute_limit(generation-generation_bonus), "Mental"))
 						Wits++
 
 				if("alertness")

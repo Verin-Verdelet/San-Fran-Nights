@@ -254,7 +254,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 							if(P.old_enough_to_get_exp)
 								P.add_experience(get_a_intelligence(H))
 							if(H.mind)
-								if("[H.mind.assigned_role]" == "Prince" || "[H.mind.assigned_role]" == "Sheriff" || "[H.mind.assigned_role]" == "Scourge" ||  "[H.mind.assigned_role]" == "Seneschal" || "[H.mind.assigned_role]" == "Chantry Regent" || "[H.mind.assigned_role]" == "Baron" || "[H.mind.assigned_role]" == "Dealer")
+								if("[H.mind.assigned_role]" == "Prince" || "[H.mind.assigned_role]" == "Sheriff" || "[H.mind.assigned_role]" == "Hound" ||  "[H.mind.assigned_role]" == "Seneschal" || "[H.mind.assigned_role]" == "Chantry Regent" || "[H.mind.assigned_role]" == "Baron" || "[H.mind.assigned_role]" == "Dealer")
 									P.add_experience(5)
 							if(won)
 								if(H.vampire_faction == won)
