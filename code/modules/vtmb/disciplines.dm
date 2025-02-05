@@ -2094,7 +2094,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 			if(mypower < 3)
 				to_chat(caster, "<span class='warning'>You fail at inducing fear!</span>")
 				if(mypower == -1)
-					new /datum/hallucination/baali(caster, TRUE)
+					caster.Stun(3 SECONDS)
 					caster.do_jitter_animation(10)
 				return
 			if(!ishuman(target))
