@@ -139,6 +139,8 @@ SUBSYSTEM_DEF(woddices)
 	var/lasombra_shield = 0
 	var/tzimisce_bonus = 0
 
+	var/diff_curse = 0
+
 /datum/attributes/proc/randomize()
 	strength = rand(1, 3)
 	dexterity = rand(1, 3)
@@ -391,7 +393,7 @@ SUBSYSTEM_DEF(woddices)
 			create_number_on_mob(rollperformer, "#646464", "0")
 			to_chat(rollperformer, "<b>No dicepool!</b>")
 		return 0
-	hardness = clamp(hardness, 1, 10)
+	hardness = clamp(hardness+rollperformer.attributes.diff_curse, 1, 10)
 	var/dices_decap = rollperformer.get_health_difficulty()
 	dices_num = max(1, dices_num-dices_decap)
 	var/wins = 0
