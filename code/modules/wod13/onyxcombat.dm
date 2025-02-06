@@ -839,6 +839,7 @@
 	if(!client || !hud_used)
 		return
 	maxbloodpool = get_gen_bloodpool(generation)-cursed_bloodpool
+	bloodpool = min(maxbloodpool, bloodpool)
 	if(hud_used.blood_icon)
 		var/emm = round((bloodpool/maxbloodpool)*10)
 		if(emm > 10)
