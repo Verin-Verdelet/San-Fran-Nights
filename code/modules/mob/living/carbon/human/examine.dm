@@ -517,10 +517,6 @@
 		var/mob/living/L = user
 		var/imya = L.get_visible_name()
 
-
-		if(imya == "Unknown")
-			. += "Kto eto...?"
-			return
 		if(imya != L.real_name)
 			return
 		else
