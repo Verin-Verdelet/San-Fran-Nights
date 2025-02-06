@@ -3311,7 +3311,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/datum/vampireclane/CLN = new clane.type()
 		character.clane = CLN
 		character.clane.current_accessory = clane_accessory
-		character.maxbloodpool = 10 + ((13 - generation) * 3)
+		character.maxbloodpool = get_gen_bloodpool(generation-generation_bonus)
 		character.bloodpool = rand(2, character.maxbloodpool)
 		character.generation = generation-generation_bonus
 		character.max_yin_chi = character.maxbloodpool

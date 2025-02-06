@@ -273,11 +273,11 @@
 								disciplines_to_give += H.client.prefs.discipline_types[i]
 							BLOODBONDED.create_disciplines(FALSE, disciplines_to_give)
 
-							BLOODBONDED.maxbloodpool = 10+((13-min(13, BLOODBONDED.generation))*3)
+							BLOODBONDED.maxbloodpool = get_gen_bloodpool(BLOODBONDED.generation)
 							BLOODBONDED.clane.enlightenment = H.clane.enlightenment
 						else
-							BLOODBONDED.maxbloodpool = 10+((13-min(13, BLOODBONDED.generation))*3)
 							BLOODBONDED.generation = 14
+							BLOODBONDED.maxbloodpool = get_gen_bloodpool(BLOODBONDED.generation)
 							BLOODBONDED.clane = new /datum/vampireclane/caitiff()
 
 						//Verify if they accepted to save being a vampire
