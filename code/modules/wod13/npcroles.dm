@@ -1311,25 +1311,30 @@
 	my_weapon = new /obj/item/gun/ballistic/automatic/vampire/m1911(src)
 	AssignSocialRole(/datum/socialrole/guard)
 
-/mob/living/carbon/human/npc/walkby/club/Life()
+/mob/living/carbon/human/npc/walkby/club/Initialize()
+	. = ..()
+	for(var/obj/machinery/jukebox/Juke in range(7, src))
+		if(Juke)
+			MyJuke = Juke
+
+/mob/living/carbon/human/npc/walkby/club/handle_automated_action()
 	. = ..()
 	if(staying && stat < 2)
-		if(prob(5))
-			var/hasjukebox = FALSE
-			for(var/obj/machinery/jukebox/J in range(5, src))
-				if(J)
-					hasjukebox = TRUE
-					if(J.active)
-						if(prob(50))
-							dancefirst(src)
-						else
-							dancesecond(src)
-			if(!hasjukebox)
-				staying = FALSE
+		if(MyJuke)
+			if(MyJuke.active)
+				if(prob(10))
+					if(prob(50))
+						dancefirst(src)
+					else
+						dancesecond(src)
+		else
+			staying = FALSE
+			MyJuke = null
 
 /mob/living/carbon/human/npc/walkby/club
 	vampire_faction = "City"
 	staying = TRUE
+	var/obj/machinery/jukebox/MyJuke
 
 /datum/socialrole/stripfemale
 	s_tones = list("albino",
