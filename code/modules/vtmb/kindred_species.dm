@@ -559,7 +559,7 @@
 /mob/living/carbon/human/verb/teach_discipline(mob/living/carbon/human/student in (range(1, src) - src))
 	set name = "Teach Discipline"
 	set category = "IC"
-	set desc ="Teach a Discipline to a Kindred who has recently drank your blood. Costs 10 experience points."
+	set desc ="Teach a Discipline to a Kindred who has recently drank your blood. Costs 500 experience points."
 
 	var/mob/living/carbon/human/teacher = src
 	var/datum/preferences/teacher_prefs = teacher.client.prefs
@@ -576,8 +576,8 @@
 	if (student.stat >= SOFT_CRIT)
 		to_chat(teacher, "<span class='warning'>Your student needs to be conscious!</span>")
 		return
-	if (teacher_prefs.true_experience < 10)
-		to_chat(teacher, "<span class='warning'>You don't have enough experience to teach them this Discipline!</span>")
+	if (teacher_prefs.true_experience < 500)
+		to_chat(teacher, "<span class='warning'>You don't have enough experience (500) to teach them this Discipline!</span>")
 		return
 	//checks that the teacher has blood bonded the student, this is something that needs to be reworked when blood bonds are made better
 	if (student.mind.enslaved_to != teacher)
@@ -631,7 +631,7 @@
 
 		visible_message("<span class='notice'>[teacher] begins mentoring [student] in [giving_discipline].</span>")
 		if (do_after(teacher, 30 SECONDS, student))
-			teacher_prefs.true_experience -= 10
+			teacher_prefs.true_experience -= 500
 
 			student_prefs.discipline_types += teaching_discipline
 			student_prefs.discipline_levels += 0
