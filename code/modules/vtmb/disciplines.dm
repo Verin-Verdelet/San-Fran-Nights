@@ -612,9 +612,8 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 	var/dominate_me = FALSE
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(H.clane)
-			if(H.clane.name == "Gargoyle")
-				dominate_me = TRUE
+		if(H.clane?.name == "Gargoyle")
+			dominate_me = TRUE
 	if(HAS_TRAIT(caster, TRAIT_MUTE))
 		to_chat(caster, "<span class='warning'>You find yourself unable to speak!</span>")
 		return

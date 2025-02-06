@@ -1444,6 +1444,7 @@
 /mob/living/carbon/human/npc/stripper
 	vampire_faction = "City"
 	staying = TRUE
+	var/obj/structure/pole/MyPole
 
 /mob/living/carbon/human/npc/stripper/Initialize()
 	..()
@@ -1453,15 +1454,20 @@
 	undershirt = "Nude"
 	socks = "Nude"
 	update_body()
+	for(var/obj/structure/pole/Pole in orange(1, src))
+		if(Pole)
+			MyPole = Pole
 
-/mob/living/carbon/human/npc/stripper/Life()
+/mob/living/carbon/human/npc/stripper/handle_automated_action()
 	. = ..()
 	if(stat < 2)
-		if(prob(20))
-			for(var/obj/structure/pole/P in range(1, src))
-				if(P)
+		if(MyPole)
+			if(prob(20))
+				if(get_dist(src, MyPole) <= 1)
 					drop_all_held_items()
-					ClickOn(P)
+					ClickOn(MyPole)
+				else
+					MyPole = null
 
 /mob/living/carbon/human/npc/incel
 	vampire_faction = "City"

@@ -1,13 +1,13 @@
 /obj/effect/proc_holder/spell/voice_of_god
-	name = "Voice of Presence"
-	desc = "Speak with an incredibly compelling voice, forcing listeners to obey your commands."
+	name = "Majesty"
+	desc = "Speak with an incredibly manipulative voice, forcing listeners to follow your commands."
 	charge_max = 1200 //variable
 	cooldown_min = 0
 	level_max = 1
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	action_icon = 'icons/mob/actions/actions_items.dmi'
-	action_icon_state = "voice_of_god"
+	action_icon_state = "majesty"
 	action_background_icon_state = "default"
 	var/command
 	var/cooldown_mod = 1
