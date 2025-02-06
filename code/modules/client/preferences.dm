@@ -2670,8 +2670,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					var/result = input(user, "Select a species", "Species Selection") as null|anything in choose_species
 					if(result)
-						all_quirks = list()
-						SetQuirks(user)
 						var/newtype = GLOB.species_list[result]
 						pref_species = new newtype()
 						discipline_types = list()
@@ -2688,6 +2686,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor"] = pref_species.default_color
 						if(randomise[RANDOM_NAME])
 							real_name = pref_species.random_name(gender)
+						all_quirks = list()
+						SetQuirks(user)
 
 				if("mutant_color")
 					if(slotlocked)
