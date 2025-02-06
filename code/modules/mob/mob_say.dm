@@ -41,6 +41,12 @@
 		if(pos)
 			to_chat(src, "Embedding images is not allowed.")
 			return
+		pattern1 = "]"
+		var/pos1 = findtext(flavor, pattern1)
+		if(pos1)
+			to_chat(src, "<span class='reallybig'> Ниггер хакерский. Не используй квадратные скобочки. </span>")
+			message_admins("[ADMIN_LOOKUPFLW(usr)] пытался вставить в флавор хуйню с скобочками.")
+			return
 		if(length(flavor) > 3 * 512)
 			to_chat(src, "Too long...")
 		else
