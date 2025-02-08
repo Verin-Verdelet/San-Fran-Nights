@@ -564,7 +564,7 @@
 	opacity = FALSE
 	baseicon = "prison"
 	glass = TRUE
-	lockpick_difficulty = 12
+	lockpick_difficulty = 8
 
 /obj/structure/vampdoor/wood
 	icon_state = "wood-1"
