@@ -661,7 +661,7 @@
 	var/wielded = FALSE
 	var/on = FALSE
 	var/last_solo = 0
-
+/*
 /obj/item/melee/vampirearms/eguitar/AltClick(mob/user)
 	if(last_solo+600 > world.time)
 		return
@@ -676,7 +676,7 @@
 			playsound(loc, 'code/modules/wod13/sounds/solo3.ogg', 100, FALSE)
 		if(result == "4")
 			playsound(loc, 'code/modules/wod13/sounds/solo4.ogg', 100, FALSE)
-
+*/
 /obj/item/melee/vampirearms/eguitar/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, PROC_REF(on_wield))

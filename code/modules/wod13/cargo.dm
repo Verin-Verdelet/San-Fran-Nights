@@ -444,6 +444,9 @@
 /obj/item/stack/dollar/ten
 	amount = 10
 
+/obj/item/stack/dollar/twenty
+	amount = 20
+
 /obj/item/stack/dollar/fifty
 	amount = 50
 
