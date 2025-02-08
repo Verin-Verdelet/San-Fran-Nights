@@ -1943,44 +1943,64 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 		if(vampire.clane?.name)
 			if(vampire.clane?.name == "Toreador")
 				to_chat(caster, "[target] is too clingy to the art.")
-			else if(vampire.clane?.name == "Daughters of Cacophony")
+				return
+			if(vampire.clane?.name == "Daughters of Cacophony")
 				to_chat(caster, "[target]'s mind is envelopped by nonstopping music.")
-			else if(vampire.clane?.name == "Ventrue")
+				return
+			if(vampire.clane?.name == "Ventrue")
 				to_chat(caster, "[target] finds no pleasure in poor's blood.")
-			else if(vampire.clane?.name == "Lasombra")
+				return
+			if(vampire.clane?.name == "Lasombra")
 				to_chat(caster, "[target] is afraid of modern technology.")
-			else if(vampire.clane?.name == "Tzimisce")
+				return
+			if(vampire.clane?.name == "Tzimisce")
 				to_chat(caster, "[target] is tied to its domain.")
-			else if(vampire.clane?.name == "Gangrel")
+				return
+			if(vampire.clane?.name == "Gangrel")
 				to_chat(caster, "[target] is a feral being used to the nature.")
-			else if(vampire.clane?.name == "Malkavian")
+				return
+			if(vampire.clane?.name == "Malkavian")
 				to_chat(caster, "[target] is unstable, the mind is ill.")
-			else if(vampire.clane?.name == "Brujah")
+				return
+			if(vampire.clane?.name == "Brujah")
 				to_chat(caster, "[target] is full of uncontrollable rage.")
-			else if(vampire.clane?.name == "Nosferatu")
+				return
+			if(vampire.clane?.name == "Nosferatu")
 				to_chat(caster, "[target] is ugly and nothing will save them.")
-			else if(vampire.clane?.name == "Tremere")
+				return
+			if(vampire.clane?.name == "Tremere")
 				to_chat(caster, "[target] is weak to kindred blood and vulnerable to blood bonds.")
-			else if(vampire.clane?.name == "Baali")
+				return
+			if(vampire.clane?.name == "Baali")
 				to_chat(caster, "[target] is afraid of holy.")
-			else if(vampire.clane?.name == "Banu Haqim")
+				return
+			if(vampire.clane?.name == "Banu Haqim")
 				to_chat(caster, "[target] is addicted to kindred vitae...")
-			else if(vampire.clane?.name == "True Brujah")
+				return
+			if(vampire.clane?.name == "True Brujah")
 				to_chat(caster, "[target] cant express emotions.")
-			else if(vampire.clane?.name == "Salubri")
+				return
+			if(vampire.clane?.name == "Salubri")
 				to_chat(caster, "[target] is unable to feed on unwilling.")
-			else if(vampire.clane?.name == "Giovanni")
+				return
+			if(vampire.clane?.name == "Giovanni")
 				to_chat(caster, "[target]'s bite inflicts too much harm.")
-			else if(vampire.clane?.name == "Cappadocian")
+				return
+			if(vampire.clane?.name == "Cappadocian")
 				to_chat(caster, "[target]'s skin will stay pale and lifeless no matter what.")
-			else if(vampire.clane?.name == "Kiasyd")
+				return
+			if(vampire.clane?.name == "Kiasyd")
 				to_chat(caster, "[target] is afraid of cold iron.")
-			else if(vampire.clane?.name == "Gargoyle")
+				return
+			if(vampire.clane?.name == "Gargoyle")
 				to_chat(caster, "[target] is too dependent on its masters, its mind is feeble.")
-			else if(vampire.clane?.name == "Followers of Set")
+				return
+			if(vampire.clane?.name == "Followers of Set")
 				to_chat(caster, "[target] is afraid of bright lights.")
-			else
-				to_chat(caster, "[target] is shunned by most as it lacks a clan.")
+				return
+			var/clan_not_found = TRUE
+			if(clan_not_found)
+				to_chat(caster, "[target] is a [vampire.clane?.name]")
 			if(clan.get_discipline("Quietus") && vampire.clane?.name != "Banu Haqim")
 				to_chat(caster, "[target] fears that the fact they stole Banu Haqim's Quietus will be known.")
 			if(clan.get_discipline("Protean") && vampire.clane?.name != "Gangrel")
