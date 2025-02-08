@@ -1345,7 +1345,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 						"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your grab at [target] was blocked!</span>")
 		return FALSE
-	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user)+get_potence_dices(user), 6, user)
+	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user), 6, user)
 	if(modifikator == -1)
 		user.AdjustKnockdown(20, TRUE)
 		playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
@@ -1370,7 +1370,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
 
-	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user)+get_potence_dices(user), 6, user)
+	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user), 6, user)
 	var/atk_verb = user.dna.species.attack_verb
 	if(modifikator == -1)
 		target = user
@@ -1478,7 +1478,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 						"<span class='danger'>You block [user]'s shove!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your shove at [target] was blocked!</span>")
 		return FALSE
-	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user)+get_potence_dices(user), 6, user)
+	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user), 6, user)
 	if(modifikator == -1)
 		user.AdjustKnockdown(20, TRUE)
 		playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
@@ -1545,12 +1545,14 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		add_hard = 2
 	var/modifikator
 	if(I.attack_diff_override > 0)
-		modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user)+get_potence_dices(user), I.attack_diff_override, user)
+		modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user), I.attack_diff_override, user)
 	else
-		modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user)+get_potence_dices(user), 6+add_hard, user)
+		modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user), 6+add_hard, user)
 	if(modifikator == -1)
-		H = user
-		modifikator = 3
+		user.visible_message("<span class='warning'>[user] slips, trying to swing [I]!</span>", \
+						"<span class='userdanger'>You slip, trying to swing [I]!</span>")
+		user.AdjustKnockdown(30, TRUE)
+		return
 	else if(modifikator == 0)
 		user.visible_message("<span class='warning'>[user] fails to attack with [I]!</span>", \
 						"<span class='userdanger'>You fail to attack with [I]!</span>")

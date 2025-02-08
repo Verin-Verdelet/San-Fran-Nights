@@ -300,9 +300,9 @@ SUBSYSTEM_DEF(woddices)
 
 /proc/get_a_strength(mob/living/Living)
 	if(Living.attributes)
-		return Living.attributes.strength+Living.attributes.strength_bonus+Living.attributes.strength_reagent
+		return Living.attributes.strength+Living.attributes.strength_bonus+Living.attributes.strength_reagent+get_potence_dices(Living)
 	else
-		return 4
+		return 3
 
 /proc/get_a_dexterity(mob/living/Living)
 	if(Living.attributes)
