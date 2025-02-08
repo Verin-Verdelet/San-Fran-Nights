@@ -2621,6 +2621,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_gen = input(user, "Select your generation (LOWER GENERATION MEANS LESS JOB SLOTS):", "Character Preference") as num|null
 					if(new_gen)
 						generation = clamp(new_gen, 7, 13)
+						generation_bonus = 0
+						diablerist = FALSE
 
 				if("friend_text")
 					var/new_text = input(user, "What a Friend knows about me:", "Character Preference") as text|null
