@@ -891,7 +891,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				person = H
 
 	// Get person to affect if radio hallucination
-	var/is_radio = !person || force_radio
+	var/is_radio = FALSE
 	if (is_radio)
 		var/list/humans = list()
 		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
