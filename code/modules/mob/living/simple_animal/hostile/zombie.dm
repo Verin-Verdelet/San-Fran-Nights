@@ -36,7 +36,8 @@
 	GLOB.zombie_list += src
 
 /mob/living/simple_animal/hostile/zombie/Bump(atom/A)
-	ClickOn(A)
+	if(!istype(A, /mob/living/simple_animal/hostile/zombie))
+		ClickOn(A)
 	..()
 
 /mob/living/simple_animal/hostile/zombie/proc/handle_automated_patriotification()
