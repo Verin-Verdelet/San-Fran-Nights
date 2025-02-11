@@ -387,13 +387,27 @@ SUBSYSTEM_DEF(woddices)
 	dat += span_end
 	return dat
 
+
 /proc/secret_vampireroll(var/dices_num = 1, var/hardness = 1, var/mob/living/rollperformer, var/stealthy = FALSE)
 	if(!dices_num)
 		if(!stealthy)
 			create_number_on_mob(rollperformer, "#646464", "0")
 			to_chat(rollperformer, "<b>No dicepool!</b>")
 		return 0
-	hardness = clamp(hardness+rollperformer.attributes.diff_curse, 1, 10)
+	var/clan_difficulty = 0
+	if(ishuman(rollperformer))
+		var/mob/living/carbon/human/Roller = rollperformer
+		if(Roller.clane?.name == "Followers of Set")
+			var/datum/vampireclane/setite/Setite = Roller.clane
+			var/turf/T = get_turf(Roller)
+			if(T)
+				var/lums = T.get_lumcount()
+				if(lums > 0.7)
+					if(Setite.last_setite_warning <= world.time)
+						Setite.last_setite_warning = world.time + 3 SECONDS
+						to_chat(Roller, "<span class='warning'>The light around is making everything difficult...</span>")
+					clan_difficulty = 1
+	hardness = clamp(hardness+rollperformer.attributes.diff_curse+clan_difficulty, 1, 10)
 	var/dices_decap = rollperformer.get_health_difficulty()
 	dices_num = max(1, dices_num-dices_decap)
 	var/wins = 0
@@ -498,7 +512,7 @@ SUBSYSTEM_DEF(woddices)
 				if(A.objectives)
 					dat += "[printobjectives(A.objectives)]<BR>"
 		if(iskindred(host) || isghoul(host))
-			if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarchs" || host.vampire_faction == "Sabbat")
+			if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarchs" || host.vampire_faction == "Sabbat" || host.vampire_faction == "Giovanni" || host.vampire_faction == "Triad")
 				dat += "I belong to [host.vampire_faction] faction, I shouldn't disobey their rules.<BR>"
 			if(host.generation)
 				dat += "I'm from [host.generation] generation.<BR>"

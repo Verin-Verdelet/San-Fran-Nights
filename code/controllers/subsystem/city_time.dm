@@ -32,12 +32,22 @@ SUBSYSTEM_DEF(city_time)
 
 	if(hour == 0 && minutes == 0)
 		var/won
-		if(length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_sabbat))
-			won = "camarilla"
-		if(length(SSfactionwar.marks_anarch) > length(SSfactionwar.marks_camarilla) && length(SSfactionwar.marks_anarch) > length(SSfactionwar.marks_sabbat))
-			won = "anarch"
-		if(length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_camarilla))
-			won = "sabbat"
+		var/last_winner_points = 0
+		if(length(SSfactionwar.marks_camarilla) > last_winner_points)
+			last_winner_points = length(SSfactionwar.marks_camarilla)
+			won = "Camarilla"
+		if(length(SSfactionwar.marks_anarch) > last_winner_points)
+			last_winner_points = length(SSfactionwar.marks_anarch)
+			won = "Anarchs"
+		if(length(SSfactionwar.marks_giovanni) > last_winner_points)
+			last_winner_points = length(SSfactionwar.marks_giovanni)
+			won = "Giovanni"
+		if(length(SSfactionwar.marks_triad) > last_winner_points)
+			last_winner_points = length(SSfactionwar.marks_triad)
+			won = "Triad"
+		if(length(SSfactionwar.marks_sabbat) > last_winner_points)
+			last_winner_points = length(SSfactionwar.marks_sabbat)
+			won = "Sabbat"
 //		for(var/mob/living/carbon/werewolf/W in GLOB.player_list)
 //			if(W)
 //				if(W.stat != DEAD)
@@ -85,12 +95,22 @@ SUBSYSTEM_DEF(city_time)
 
 	if(hour == 3 && minutes == 0)
 		var/won
-		if(length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_sabbat))
-			won = "camarilla"
-		if(length(SSfactionwar.marks_anarch) > length(SSfactionwar.marks_camarilla) && length(SSfactionwar.marks_anarch) > length(SSfactionwar.marks_sabbat))
-			won = "anarch"
-		if(length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_camarilla))
-			won = "sabbat"
+		var/last_winner_points = 0
+		if(length(SSfactionwar.marks_camarilla) > last_winner_points)
+			last_winner_points = length(SSfactionwar.marks_camarilla)
+			won = "Camarilla"
+		if(length(SSfactionwar.marks_anarch) > last_winner_points)
+			last_winner_points = length(SSfactionwar.marks_anarch)
+			won = "Anarchs"
+		if(length(SSfactionwar.marks_giovanni) > last_winner_points)
+			last_winner_points = length(SSfactionwar.marks_giovanni)
+			won = "Giovanni"
+		if(length(SSfactionwar.marks_triad) > last_winner_points)
+			last_winner_points = length(SSfactionwar.marks_triad)
+			won = "Triad"
+		if(length(SSfactionwar.marks_sabbat) > last_winner_points)
+			last_winner_points = length(SSfactionwar.marks_sabbat)
+			won = "Sabbat"
 //		for(var/mob/living/carbon/werewolf/W in GLOB.player_list)
 //			if(W)
 //				if(W.stat != DEAD)

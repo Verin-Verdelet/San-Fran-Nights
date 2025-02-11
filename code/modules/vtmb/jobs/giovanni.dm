@@ -136,6 +136,7 @@
 
 /datum/outfit/job/giovannimafia/pre_equip(mob/living/carbon/human/H)
 	..()
+	H.vampire_faction = "Giovanni"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels

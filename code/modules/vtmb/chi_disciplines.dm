@@ -1786,7 +1786,7 @@
 			var/sound/auspexbeat = sound('code/modules/wod13/sounds/auspex.ogg', repeat = TRUE)
 			caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
 			ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
-			caster.see_invisible = SEE_INVISIBLE_LEVEL_OBFUSCATE
+			caster.see_invisible = SEE_INVISIBLE_LEVEL_OBFUSCATE+level
 			caster.update_sight()
 			caster.add_client_colour(/datum/client_colour/glass_colour/lightblue)
 			var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
@@ -1795,7 +1795,7 @@
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.auspex_examine = FALSE
-					caster.see_invisible = initial(caster.see_invisible)
+					caster.see_invisible = caster.get_initial_see_invisible()
 					abductor_hud.remove_hud_from(caster)
 					caster.stop_sound_channel(CHANNEL_DISCIPLINES)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/auspex_deactivate.ogg', 50, FALSE)
@@ -1807,7 +1807,7 @@
 			caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
 			ADD_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
 			ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
-			caster.see_invisible = SEE_INVISIBLE_LEVEL_OBFUSCATE
+			caster.see_invisible = SEE_INVISIBLE_LEVEL_OBFUSCATE+level
 			caster.update_sight()
 			var/datum/atom_hud/health_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 			health_hud.add_hud_to(caster)
@@ -1815,7 +1815,7 @@
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.auspex_examine = FALSE
-					caster.see_invisible = initial(caster.see_invisible)
+					caster.see_invisible = caster.get_initial_see_invisible()
 					health_hud.remove_hud_from(caster)
 					caster.stop_sound_channel(CHANNEL_DISCIPLINES)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/auspex_deactivate.ogg', 50, FALSE)
@@ -1977,7 +1977,7 @@
 			spawn(30 SECONDS)
 				if(caster)
 					caster.client?.prefs.chat_toggles &= ~CHAT_DEAD
-					caster.see_invisible = initial(caster.see_invisible)
+					caster.see_invisible = caster.get_initial_see_invisible()
 		if(2)
 			var/chosen_z
 			var/umbra_z

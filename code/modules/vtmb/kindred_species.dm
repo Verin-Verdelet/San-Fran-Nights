@@ -55,6 +55,8 @@
 	C.yin_chi = 6
 	C.max_yin_chi = 6
 
+//	C.see_invisible = C.get_initial_see_invisible()
+
 	//vampires go to -200 damage before dying
 	for (var/obj/item/bodypart/bodypart in C.bodyparts)
 		bodypart.max_damage *= 1.5
@@ -180,9 +182,10 @@
 				var/new_master = FALSE
 				BLOODBONDED.faction |= H.faction
 				if(!istype(BLOODBONDED, /mob/living/carbon/human/npc))
-					if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarchs" || H.vampire_faction == "Sabbat")
+					if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarchs" || H.vampire_faction == "Sabbat" || H.vampire_faction == "Giovanni" || H.vampire_faction == "Triad")
 						if(BLOODBONDED.vampire_faction != H.vampire_faction)
 							BLOODBONDED.vampire_faction = H.vampire_faction
+							BLOODBONDED.see_invisible = BLOODBONDED.get_initial_see_invisible()
 							if(H.vampire_faction == "Sabbat")
 								if(BLOODBONDED.mind)
 									BLOODBONDED.mind.add_antag_datum(/datum/antagonist/sabbatist)

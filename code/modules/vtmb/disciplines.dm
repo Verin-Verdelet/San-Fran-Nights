@@ -462,7 +462,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 			if(shitcasted)
 				GLOB.auspex_list -= caster
 			caster.auspex_examine = FALSE
-			caster.see_invisible = initial(caster.see_invisible)
+			caster.see_invisible = caster.get_initial_see_invisible()
 			var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
 			abductor_hud.remove_hud_from(caster)
 			var/datum/atom_hud/health_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
@@ -1973,7 +1973,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 		return
 	var/mob/living/carbon/human/vampire = target
 	if(iskindred(vampire))
-		var/datum/species/kindred/clan = vampire.dna.species
+//		var/datum/species/kindred/clan = vampire.dna.species
 		if(vampire.clane?.name)
 			if(vampire.clane?.name == "Toreador")
 				to_chat(caster, "[target] is too clingy to the art.")
