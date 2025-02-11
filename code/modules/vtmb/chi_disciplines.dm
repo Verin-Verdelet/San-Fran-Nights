@@ -1795,7 +1795,7 @@
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.auspex_examine = FALSE
-					caster.see_invisible = caster.get_initial_see_invisible()
+					caster.update_sight()
 					abductor_hud.remove_hud_from(caster)
 					caster.stop_sound_channel(CHANNEL_DISCIPLINES)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/auspex_deactivate.ogg', 50, FALSE)
@@ -1815,7 +1815,7 @@
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.auspex_examine = FALSE
-					caster.see_invisible = caster.get_initial_see_invisible()
+					caster.update_sight()
 					health_hud.remove_hud_from(caster)
 					caster.stop_sound_channel(CHANNEL_DISCIPLINES)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/auspex_deactivate.ogg', 50, FALSE)
@@ -1977,7 +1977,7 @@
 			spawn(30 SECONDS)
 				if(caster)
 					caster.client?.prefs.chat_toggles &= ~CHAT_DEAD
-					caster.see_invisible = caster.get_initial_see_invisible()
+					caster.update_sight()
 		if(2)
 			var/chosen_z
 			var/umbra_z

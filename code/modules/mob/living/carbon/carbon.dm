@@ -721,8 +721,6 @@
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_NV_TRAIT)
 		see_in_dark = max(see_in_dark, 8)
 
-	see_invisible = get_initial_see_invisible()
-
 	if(see_override)
 		see_invisible = see_override
 	. = ..()

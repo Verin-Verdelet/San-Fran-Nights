@@ -35,6 +35,10 @@
 	. = ..()
 	GLOB.zombie_list += src
 
+/mob/living/simple_animal/hostile/zombie/Bump(atom/A)
+	ClickOn(A)
+	..()
+
 /mob/living/simple_animal/hostile/zombie/proc/handle_automated_patriotification()
 	if(target_to_zombebe)
 		if(get_dist(src, target_to_zombebe) > 7)

@@ -241,14 +241,6 @@ SUBSYSTEM_DEF(factionwar)
 	var/permanent = FALSE
 	invisibility = INVISIBILITY_FACTION
 
-/mob/living/proc/get_initial_see_invisible()
-	if(iskindred(src) || iscathayan(src))
-		return SEE_INVISIBLE_FACTION
-	if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarchs" || H.vampire_faction == "Giovanni" || H.vampire_faction == "Triad" || H.vampire_faction == "Sabbat")
-		return SEE_INVISIBLE_FACTION
-	else
-		return initial(see_invisible)
-
 /obj/graffiti/Initialize()
 	. = ..()
 	if(icon_state)
