@@ -46,7 +46,6 @@
 				return
 			message_admins("[ADMIN_LOOKUPFLW(src)] is attempting to Diablerize [ADMIN_LOOKUPFLW(mob)]")
 			log_attack("[key_name(src)] is attempting to Diablerize [key_name(mob)].")
-			var/vse_taki = FALSE
 			if(mob.key)
 
 				if(!GLOB.canon_event)
