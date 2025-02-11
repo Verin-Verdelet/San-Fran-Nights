@@ -2641,15 +2641,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("flavor_text")
 					var/new_flavor = input(user, "Choose your character's flavor text:", "Character Preference") as text|null
 					if(new_flavor)
-						var/pattern = "]"
-						var/pos = findtext(new_flavor, pattern)
-						if(pos)
-							playsound(get_turf(user), 'code/modules/wod13/sounds/CURSE.ogg', 70, TRUE)
-							to_chat(usr, "<span class='reallybig'> Ниггер хакерский. Не используй квадратные скобочки. </span>")
-							message_admins("[ADMIN_LOOKUPFLW(usr)] пытался вставить в флавор хуйню с скобочками")
-							return
 						if(length(new_flavor) > 3 * 512)
-							to_chat(user, "Too long...")
+							to_chat(user, "Слишком большой...")
 						else
 							flavor_text = trim(copytext_char(sanitize(new_flavor), 1, 512))
 				if("change_appearance")
