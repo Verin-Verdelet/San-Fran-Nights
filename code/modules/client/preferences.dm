@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/ignoring = list()
 
-	var/clientfps = -1
+	var/clientfps = 60
 
 	var/parallax
 
@@ -256,6 +256,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/Medicine = 0
 	var/Linguistics = 0
 	var/Occult = 0
+
+	var/old_enough_to_get_exp = FALSE
 
 /datum/preferences/proc/add_experience(amount)
 	true_experience = clamp(true_experience + amount, 0, 1000)
@@ -1395,18 +1397,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return mental_priorities
 	return 0
 
-/proc/get_gen_attribute_limit(var/gen = 13)
-	switch(gen)
-		if(9)
-			return 6
-		if(8)
-			return 7
-		if(7)
-			return 8
-		if(6)
-			return 9
-	if(gen < 6)
-		return 10
+/datum/preferences/proc/get_gen_attribute_limit(var/gen = 13)
+	if(pref_species.name == "Vampire")
+		switch(gen)
+			if(9)
+				return 6
+			if(8)
+				return 7
+			if(7)
+				return 8
+			if(6)
+				return 9
+		if(gen < 6)
+			return 10
+	if(pref_species.name == "Kuei-Jin")
+		return max(5, 4+dharma_level)
 	return 5
 
 #undef APPEARANCE_CATEGORY_COLUMN
@@ -2342,39 +2347,39 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						reset_stats(TRUE)
 
 				if("strength")
-					if(handle_upgrade(Strength, Strength * 5, get_gen_attribute_limit(generation), "Physical"))
+					if(handle_upgrade(Strength, Strength * 5, get_gen_attribute_limit(generation-generation_bonus), "Physical"))
 						Strength++
 
 				if("dexterity")
-					if(handle_upgrade(Dexterity, Dexterity * 5, get_gen_attribute_limit(generation), "Physical"))
+					if(handle_upgrade(Dexterity, Dexterity * 5, get_gen_attribute_limit(generation-generation_bonus), "Physical"))
 						Dexterity++
 
 				if("stamina")
-					if(handle_upgrade(Stamina, Stamina * 5, get_gen_attribute_limit(generation), "Physical"))
+					if(handle_upgrade(Stamina, Stamina * 5, get_gen_attribute_limit(generation-generation_bonus), "Physical"))
 						Stamina++
 
 				if("charisma")
-					if(handle_upgrade(Charisma, Charisma * 5, get_gen_attribute_limit(generation), "Social"))
+					if(handle_upgrade(Charisma, Charisma * 5, get_gen_attribute_limit(generation-generation_bonus), "Social"))
 						Charisma++
 
 				if("manipulation")
-					if(handle_upgrade(Manipulation, Manipulation * 5, get_gen_attribute_limit(generation), "Social"))
+					if(handle_upgrade(Manipulation, Manipulation * 5, get_gen_attribute_limit(generation-generation_bonus), "Social"))
 						Manipulation++
 
 				if("appearance")
-					if(handle_upgrade(Appearance, Appearance * 5, get_gen_attribute_limit(generation), "Social"))
+					if(handle_upgrade(Appearance, Appearance * 5, get_gen_attribute_limit(generation-generation_bonus), "Social"))
 						Appearance++
 
 				if("perception")
-					if(handle_upgrade(Perception, Perception * 5, get_gen_attribute_limit(generation), "Mental"))
+					if(handle_upgrade(Perception, Perception * 5, get_gen_attribute_limit(generation-generation_bonus), "Mental"))
 						Perception++
 
 				if("intelligence")
-					if(handle_upgrade(Intelligence, Intelligence * 5, get_gen_attribute_limit(generation), "Mental"))
+					if(handle_upgrade(Intelligence, Intelligence * 5, get_gen_attribute_limit(generation-generation_bonus), "Mental"))
 						Intelligence++
 
 				if("wits")
-					if(handle_upgrade(Wits, Wits * 5, get_gen_attribute_limit(generation), "Mental"))
+					if(handle_upgrade(Wits, Wits * 5, get_gen_attribute_limit(generation-generation_bonus), "Mental"))
 						Wits++
 
 				if("alertness")
@@ -2624,6 +2629,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_gen = input(user, "Select your generation (LOWER GENERATION MEANS LESS JOB SLOTS):", "Character Preference") as num|null
 					if(new_gen)
 						generation = clamp(new_gen, 7, 13)
+						generation_bonus = 0
+						diablerist = FALSE
 
 				if("friend_text")
 					var/new_text = input(user, "What a Friend knows about me:", "Character Preference") as text|null
@@ -2645,6 +2652,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							to_chat(user, "Слишком большой...")
 						else
 							flavor_text = trim(copytext_char(sanitize(new_flavor), 1, 512))
+              
 				if("change_appearance")
 					if((true_experience < 3) || !slotlocked)
 						return
@@ -2675,18 +2683,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					var/result = input(user, "Select a species", "Species Selection") as null|anything in choose_species
 					if(result)
-						all_quirks = list()
-						SetQuirks(user)
 						var/newtype = GLOB.species_list[result]
 						pref_species = new newtype()
-						if(pref_species.id == "ghoul" || pref_species.id == "human" || pref_species.id == "kuei-jin")
-							discipline_types = list()
-							discipline_levels = list()
+						discipline_types = list()
+						discipline_levels = list()
 						if(pref_species.id == "kindred")
 							qdel(clane)
 							clane = new /datum/vampireclane/brujah()
-							discipline_types = list()
-							discipline_levels = list()
 							for (var/i in 1 to clane.clane_disciplines.len)
 								discipline_types += clane.clane_disciplines[i]
 								discipline_levels += 1
@@ -2696,6 +2699,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor"] = pref_species.default_color
 						if(randomise[RANDOM_NAME])
 							real_name = pref_species.random_name(gender)
+						all_quirks = list()
+						SetQuirks(user)
 
 				if("mutant_color")
 					if(slotlocked)
@@ -3275,15 +3280,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.name = character.real_name
 	character.diablerist = diablerist
 
-	character.attributes.strength = Strength
-	character.attributes.dexterity = Dexterity
-	character.attributes.stamina = Stamina
-	character.attributes.charisma = Charisma
-	character.attributes.manipulation = Manipulation
-	character.attributes.appearance = Appearance
-	character.attributes.perception = Perception
-	character.attributes.intelligence = Intelligence
-	character.attributes.wits = Wits
+	var/genlimited = get_gen_attribute_limit(generation-generation_bonus)
+
+	character.attributes.strength = min(genlimited, Strength)
+	character.attributes.dexterity = min(genlimited, Dexterity)
+	character.attributes.stamina = min(genlimited, Stamina)
+	character.attributes.charisma = min(genlimited, Charisma)
+	character.attributes.manipulation = min(genlimited, Manipulation)
+	character.attributes.appearance = min(genlimited, Appearance)
+	character.attributes.perception = min(genlimited, Perception)
+	character.attributes.intelligence = min(genlimited, Intelligence)
+	character.attributes.wits = min(genlimited, Wits)
 
 	character.attributes.Alertness = Alertness
 	character.attributes.Athletics = Athletics
@@ -3317,7 +3324,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/datum/vampireclane/CLN = new clane.type()
 		character.clane = CLN
 		character.clane.current_accessory = clane_accessory
-		character.maxbloodpool = 10 + ((13 - generation) * 3)
+		character.maxbloodpool = get_gen_bloodpool(generation-generation_bonus)
 		character.bloodpool = rand(2, character.maxbloodpool)
 		character.generation = generation-generation_bonus
 		character.max_yin_chi = character.maxbloodpool
