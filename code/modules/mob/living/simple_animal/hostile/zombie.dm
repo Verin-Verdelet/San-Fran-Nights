@@ -43,9 +43,9 @@
 /mob/living/simple_animal/hostile/zombie/proc/handle_automated_patriotification()
 	var/obj/MovableShit
 	if(target_to_zombebe)
-		MovableShit= locate() in get_step_towards(src, target_to_zombebe)
+		MovableShit = locate() in get_step_towards(src, target_to_zombebe)
 	else if(GLOB.vampgate)
-		MovableShit= locate() in get_step_towards(src, GLOB.vampgate)
+		MovableShit = locate() in get_step_towards(src, GLOB.vampgate)
 	if(MovableShit)
 		ClickOn(MovableShit)
 	if(target_to_zombebe)
