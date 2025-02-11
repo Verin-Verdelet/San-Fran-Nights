@@ -31,12 +31,6 @@
 	set category = "IC"
 	var/flavor = input("Choose your new flavor text:") as text|null
 	if(flavor)
-		var/pattern = "]"
-		var/pos = findtext(flavor, pattern)
-		if(pos)
-			to_chat(src, "<span class='reallybig'> Ниггер хакерский. Не используй квадратные скобочки. </span>")
-			message_admins("[ADMIN_LOOKUPFLW(usr)] пытался вставить в флавор хуйню с скобочками.")
-			return
 		if(length(flavor) > 3 * 512)
 			to_chat(src, "Слишкой большой...")
 		else
