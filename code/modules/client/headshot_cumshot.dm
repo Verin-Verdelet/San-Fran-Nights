@@ -41,15 +41,15 @@
 	var/static/end_regex = regex("(\\.jpg|\\.png|\\.jpeg)$")
 
 	if (length(usr_input) > HEADSHOT_LINK_MAX_LENGTH)
-		to_chat(user, span_warning("Ссылка слишком большая! Максимальная длина: [HEADSHOT_LINK_MAX_LENGTH] символов!"))
+		to_chat(user, "<span class='warning'>Ссылка слишком большая! Максимальная длина: [HEADSHOT_LINK_MAX_LENGTH] символов!</span>")
 		return ACTION_HEADSHOT_LINK_NOOP
 
 	if(!findtext(usr_input, link_regex))
-		to_chat(user, span_warning("Ссылка должна быть не укороченной Gyazo, iBB, E621, Discord ссылкой!"))
+		to_chat(user, "<span class='warning'>Ссылка должна быть не укороченной Gyazo, iBB, E621, Discord ссылкой!</span>")
 		return ACTION_HEADSHOT_LINK_NOOP
 
 	if(!findtext(usr_input, end_regex))
-		to_chat(user, span_warning("Тебе нужно вставить \".png\", \".jpg\", or \".jpeg\" в конце ссылки!"))
+		to_chat(user, "<span class='warning'>Тебе нужно вставить \".png\", \".jpg\", or \".jpeg\" в конце ссылки!</span>")
 		return ACTION_HEADSHOT_LINK_NOOP
 
 	if(findtext(usr_input, nigga))
