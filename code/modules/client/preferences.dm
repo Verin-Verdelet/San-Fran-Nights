@@ -190,7 +190,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/ambitious = FALSE
 	var/flavor_text
-
+	var/headshot
+	var/headshot_link
 	var/friend_text
 	var/enemy_text
 	var/lover_text
@@ -421,6 +422,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<a href='?_src_=prefs;preference=name;task=random'>Random Name</A> "
 			dat += "<br><b>Name:</b> "
 			dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
+
 
 			if(!(AGENDER in pref_species.species_traits))
 				var/dispGender
@@ -725,9 +727,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance (3)</a><BR>"
 
 			dat += "<BR><b>Flavor Text:</b> [flavor_text] <a href='?_src_=prefs;preference=flavor_text;task=input'>Change</a><BR>"
+			dat += "<br><br>"
+
+			dat += "<h2>Headshot Image</h2>"
+			dat += "<a href='?_src_=prefs;preference=headshot'><b>Set Headshot Image</b></a><br>"
+			if(features["headshot_link"])
+				dat += "<img style='border:2px solid rgb(255, 255, 255)' src='[features["headshot_link"]]' width='200px' height='200px'>"
 
 			dat += "<h2>[make_font_cool("EQUIP")]</h2>"
-
+			dat += "<br><br>"
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_UNDERWEAR]'>[(randomise[RANDOM_UNDERWEAR]) ? "Lock" : "Unlock"]</A>"
 
@@ -2638,21 +2646,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						lover_text = trim(copytext_char(sanitize(new_text), 1, 512))
 
 				if("flavor_text")
-					var/new_flavor = input(user, "Choose your character's flavor text:", "Character Preference")  as text|null
+					var/new_flavor = input(user, "Choose your character's flavor text:", "Character Preference") as text|null
 					if(new_flavor)
-						var/pattern = "]"
-						var/pos = findtext(new_flavor, pattern)
-						if(pos)
-							playsound(get_turf(user), 'code/modules/wod13/sounds/CURSE.ogg', 70, TRUE)
-							to_chat(usr, "<span class='reallybig'> Ниггер хакерский. Не используй квадратные скобочки. </span>")
-							message_admins("[ADMIN_LOOKUPFLW(usr)] пытался вставить в флавор хуйню с скобочками")
-							return
 						if(length(new_flavor) > 3 * 512)
-							to_chat(user, "Too long...")
+							to_chat(user, "Слишком большой...")
 						else
 							flavor_text = trim(copytext_char(sanitize(new_flavor), 1, 512))
-
-
+              
 				if("change_appearance")
 					if((true_experience < 3) || !slotlocked)
 						return
@@ -3373,6 +3373,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			GLOB.masquerade_breakers_list += character
 
 	character.flavor_text = sanitize_text(flavor_text)
+	if (features["headshot_link"])
+		character.headshot_link += (features["headshot_link"])
 	character.gender = gender
 	character.age = age
 	character.chronological_age = total_age
