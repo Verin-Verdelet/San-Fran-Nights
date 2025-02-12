@@ -331,8 +331,6 @@
 </body>
 </html>
 "}
-		if(!ishuman(usr))
-			return
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
 		if(H.stat > UNCONSCIOUS)
 			return
