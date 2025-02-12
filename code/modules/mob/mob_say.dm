@@ -21,7 +21,10 @@
 	set category = "IC"
 	var/flavor = input("Choose your new flavor text:") as text|null
 	if(flavor)
-		flavor_text = trim(copytext_char(sanitize(flavor), 1, 512))
+		if(length(flavor) > 3 * 512)
+			to_chat(src, "Слишкой большой...")
+		else
+			flavor_text = trim(copytext_char(sanitize(flavor), 1, 512))
 
 ///Whisper verb
 /mob/verb/whisper_verb(message as text)
