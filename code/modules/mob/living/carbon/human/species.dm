@@ -1370,7 +1370,15 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
 
-	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user), 6, user)
+	var/add_hard = 0
+	if(user.zone_selected == BODY_ZONE_L_ARM || user.zone_selected == BODY_ZONE_R_ARM || user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG)
+		add_hard = 1
+	if(user.zone_selected == BODY_ZONE_HEAD)
+		add_hard = 2
+	if(user.zone_selected == BODY_ZONE_PRECISE_EYES || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+		add_hard = 3
+
+	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user), 6+add_hard, user)
 	var/atk_verb = user.dna.species.attack_verb
 	if(modifikator == -1)
 		target = user
@@ -1539,10 +1547,12 @@ GLOBAL_LIST_EMPTY(selectable_races)
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
 	var/add_hard = 0
-	if(user.zone_selected == BODY_ZONE_HEAD)
+	if(user.zone_selected == BODY_ZONE_L_ARM || user.zone_selected == BODY_ZONE_R_ARM || user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG)
 		add_hard = 1
-	if(user.zone_selected == BODY_ZONE_PRECISE_EYES || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+	if(user.zone_selected == BODY_ZONE_HEAD)
 		add_hard = 2
+	if(user.zone_selected == BODY_ZONE_PRECISE_EYES || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+		add_hard = 3
 	var/modifikator
 	if(I.attack_diff_override > 0)
 		modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user), I.attack_diff_override, user)

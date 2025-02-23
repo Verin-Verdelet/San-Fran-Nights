@@ -62,6 +62,11 @@
 			P.setAngle(rand(0, 360))//SHING
 			emote("flip")
 			return BULLET_ACT_FORCE_PIERCE
+//	var/my_dodge_chances = get_a_dexterity(src)+get_a_alertness(src)-getarmor(def_zone, LETHAL)
+//	if(my_dodge_chances)
+//		if(prob(my_dodge_chances*5))
+//			playsound(get_turf(src), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+//			return BULLET_ACT_FORCE_PIERCE
 	if(dna?.species)
 		var/spec_return = dna.species.bullet_act(P, src)
 		if(spec_return)
