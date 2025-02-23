@@ -1428,6 +1428,15 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		if(user.dna.species.punchdamagelow)
 			miss_chance = 0
 
+		var/my_dodge_chances = get_a_dexterity(target)+get_a_alertness(target)-target.getarmor(user.zone_selected, LETHAL)
+		if(my_dodge_chances && target.stat == 0)
+			if(secret_vampireroll(my_dodge_chances, 6+target.get_health_difficulty(), target, TRUE) >= 2)
+				var/matrix/initial_transform = matrix(target.transform)
+				var/matrix/rotated_transform = target.transform.Turn(pick(-15, 15))
+				animate(target, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+				animate(transform=initial_transform, time = 2, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
+				miss_chance = 100
+
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
 			target.visible_message("<span class='danger'>[user]'s [atk_verb] misses [target]!</span>", \
@@ -1587,6 +1596,17 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		damagtype = LETHAL
 	if(I.damtype == CLONE || ((iskindred(H) || iscathayan(H)) && I.damtype == BURN))
 		damagtype = AGGRAVATED
+
+	var/my_dodge_chances = get_a_dexterity(H)+get_a_alertness(H)-H.getarmor(def_zone, LETHAL)
+	if(my_dodge_chances && H.stat == 0)
+		if(secret_vampireroll(my_dodge_chances, 7+H.get_health_difficulty(), H, TRUE) >= 2)
+			var/matrix/initial_transform = matrix(H.transform)
+			var/matrix/rotated_transform = H.transform.Turn(pick(-15, 15))
+			animate(H, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+			animate(transform=initial_transform, time = 2, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
+			H.visible_message("<span class='warning'>[H] dodges [I]!</span>", \
+						"<span class='userdanger'>You dodge [I]!</span>")
+			return FALSE
 
 	var/armor_block = H.run_armor_check(affecting, damagtype, "<span class='notice'>Your armor has protected your [hit_area]!</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area]!</span>",I.armour_penetration)
 //	armor_block = min(90,armor_block) //cap damage reduction at 90%
