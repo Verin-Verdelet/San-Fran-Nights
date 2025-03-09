@@ -301,11 +301,9 @@
 	humanform.dna.species.burnmod = initial(humanform.dna.species.burnmod)
 	humanform.invisibility = initial(humanform.invisibility)
 	humanform.warform = null
-
 	for(var/datum/action/end_warform/W in humanform.actions)
 		if(W)
 			W.Remove(humanform)
-
 	qdel(src)
 
 /datum/action/end_warform
