@@ -483,7 +483,7 @@
 		eye_overlay.mouse_opacity = 0
 		eye_overlay.pixel_w = -32
 		eye_overlay.pixel_z = -32
-		eye_overlay.alpha = 16
+		eye_overlay.alpha = 64
 		add_overlay(eye_overlay)
 //	else
 //		cut_overlays()
