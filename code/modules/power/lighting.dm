@@ -474,6 +474,18 @@
 		else
 			removeStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
 
+	if(on)
+		var/mutable_appearance/eye_overlay = mutable_appearance('code/modules/wod13/lighting_extended.dmi', "[base_state]-overlay")
+		eye_overlay.color = bulb_colour
+		eye_overlay.plane = ABOVE_LIGHTING_PLANE
+		eye_overlay.layer = ABOVE_LIGHTING_LAYER
+		eye_overlay.pixel_w = -32
+		eye_overlay.pixel_z = -32
+		eye_overlay.alpha = 16
+		add_overlay(eye_overlay)
+	else
+		cut_overlays()
+
 	broken_sparks(start_only=TRUE)
 
 /obj/machinery/light/update_atom_colour()
