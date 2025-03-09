@@ -717,6 +717,7 @@
 	pixel_w = -16
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	mob_size = MOB_SIZE_HUGE
+	AIStatus = AI_OFF
 	speak_chance = 0
 	speed = -0.55
 	maxHealth = 575
