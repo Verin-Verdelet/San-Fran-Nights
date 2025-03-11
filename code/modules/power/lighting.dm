@@ -382,6 +382,7 @@
 
 /obj/machinery/light/Destroy()
 	var/area/A = get_area(src)
+	qdel(rtx_light)
 	if(A)
 		on = FALSE
 //		A.update_lights()
@@ -416,6 +417,10 @@
 //			SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir)
 
 // update the icon_state and luminosity of the light depending on its state
+
+/obj/machinery/light
+	var/atom/movable/rtx_light
+
 /obj/machinery/light/proc/update(trigger = TRUE)
 	if(istype(get_area(src), /area/vtm))
 		var/area/A = get_area(src)
@@ -474,17 +479,25 @@
 		else
 			removeStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
 
-	cut_overlays()
+	if(!rtx_light)
+		rtx_light = new (loc)
+		rtx_light.icon = 'code/modules/wod13/lighting_extended.dmi'
+		rtx_light.icon_state = "[base_state]-overlay"
+		rtx_light.color = bulb_colour
+		rtx_light.density = FALSE
+		rtx_light.anchored = TRUE
+		rtx_light.pixeL_x = pixel_x
+		rtx_light.pixel_y = pixel_y
+		rtx_light.plane = ABOVE_LIGHTING_PLANE
+		rtx_light.layer = ABOVE_LIGHTING_LAYER
+		rtx_light.mouse_opacity = 0
+		rtx_light.pixel_w = -32
+		rtx_light.pixel_z = -32
+		rtx_light.alpha = 64
+
+	rtx_light.alpha = 0
 	if(on)
-		var/mutable_appearance/eye_overlay = mutable_appearance('code/modules/wod13/lighting_extended.dmi', "[base_state]-overlay")
-		eye_overlay.color = bulb_colour
-		eye_overlay.plane = ABOVE_LIGHTING_PLANE
-		eye_overlay.layer = ABOVE_LIGHTING_LAYER
-		eye_overlay.mouse_opacity = 0
-		eye_overlay.pixel_w = -32
-		eye_overlay.pixel_z = -32
-		eye_overlay.alpha = 64
-		add_overlay(eye_overlay)
+		rtx_light.alpha = 64
 //	else
 //		cut_overlays()
 
