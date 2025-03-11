@@ -486,7 +486,7 @@
 		rtx_light.color = bulb_colour
 		rtx_light.density = FALSE
 		rtx_light.anchored = TRUE
-		rtx_light.pixeL_x = pixel_x
+		rtx_light.pixel_x = pixel_x
 		rtx_light.pixel_y = pixel_y
 		rtx_light.plane = ABOVE_LIGHTING_PLANE
 		rtx_light.layer = ABOVE_LIGHTING_LAYER
