@@ -736,6 +736,9 @@
 /obj/item/melee/classic_baton/vampire
 	name = "police baton"
 	desc = "Blunt instrument of justice."
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'code/modules/wod13/weapons.dmi'
 	icon_state = "baton"
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("bludgeons", "bashes", "beats")
