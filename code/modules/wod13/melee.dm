@@ -636,6 +636,7 @@
 /obj/item/melee/vampirearms/katana/kosa
 	name = "scythe"
 	desc = "More instrument, than a weapon. Instrumentally cuts heads..."
+	icon = 'code/modules/wod13/weapons.dmi'
 	icon_state = "kosa"
 	force = 50
 	w_class = WEIGHT_CLASS_NORMAL
