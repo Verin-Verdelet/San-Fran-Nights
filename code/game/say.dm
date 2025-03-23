@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/endspanpart = "</span>"
 	if(ishuman(speaker))
 		var/mob/living/carbon/human/H = speaker
-		endspanpart += " <span class='info'>[H.phonevoicetag]</span>"
+		endspanpart += " <span class='info'>([H.phonevoicetag])</span>"
 	//End name span.
 
 	//Message
