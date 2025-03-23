@@ -20,7 +20,10 @@
 	my_contact_is_important = TRUE
 	known_contacts = list(
 		"Prince",
-		"Dealer"
+		"Dealer",
+		"Bouncer",
+		"Emissary",
+		"Sweeper"
 	)
 
 	v_duty = "You lead the Anarchs in the City. A Camarilla faction that values freedom and individuality. While not a fan of the traditions, you still respect the Masquerade."
@@ -30,6 +33,7 @@
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Ventrue", "Lasombra", "Gargoyle", "Followers of Set")
 	experience_addition = 0
+
 
 /datum/outfit/job/barkeeper
 	name = "Baron"
