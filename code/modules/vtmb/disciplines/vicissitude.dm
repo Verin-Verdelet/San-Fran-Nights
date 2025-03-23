@@ -86,7 +86,8 @@
 				qdel(target)
 		else
 			H.emote("scream")
-			H.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
+			H.apply_damage(30, BRUTE, BODY_ZONE_CHEST)
+			H.apply_damage(10, CLONE)
 			if(prob(5))
 				var/obj/item/bodypart/B = H.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 				if(B)
@@ -94,7 +95,7 @@
 	else if(isliving(target))
 		var/mob/living/Twister = target
 		Twister.Stun(20)
-		Twister.apply_damage(10, BRUTE)
+		Twister.apply_damage(30, BRUTE)
 		Twister.apply_damage(10, CLONE)
 		Twister.visible_message("<span class='danger'>[target]'s skin writhes like worms, twisting and contorting!</span>", "<span class='userdanger'>Your flesh twists unnaturally!</span>")
 
