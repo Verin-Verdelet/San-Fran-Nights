@@ -24,7 +24,7 @@
 	name = "Dominate"
 	desc = "Dominate over other living or un-living beings."
 	button_icon_state = "dominate"
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
 	var/cool_down = 0
 
@@ -58,7 +58,7 @@
 		new_say = sanitize_text(new_say)
 		if(new_say)
 			owner.say(new_say)
-			owner.intro_Sperma(new_say, 5)
+			victim.intro_Sperma(new_say, 5)
 			victim.cure_trauma_type(/datum/brain_trauma/hypnosis/dominate, TRAUMA_RESILIENCE_MAGIC)
 			victim.gain_trauma(new /datum/brain_trauma/hypnosis/dominate(new_say), TRAUMA_RESILIENCE_MAGIC)
 
