@@ -44,6 +44,8 @@
 	alpha = 0
 	var/reading
 
+/////////////////////На будущее///////////////////////
+/*
 /mob/proc/into_fisheye()
 	var/obj/screen/fullscreen/fisheye/F = new()
 	client.screen += F
@@ -79,3 +81,4 @@
 	icon_state = "light"
 	pixel_x = -176
 	pixel_y = -176
+*/
