@@ -340,7 +340,7 @@ SUBSYSTEM_DEF(carpool)
 		for(var/mob/living/rider in src)
 			. += "<span class='notice'>* [rider]</span>"
 
-/obj/vampire_car/proc/get_damage(var/cost, var/mob/living/bumped_into, var/onbump_force = 0)
+/obj/vampire_car/proc/get_damage(var/cost, var/mob/living/bumped_into, var/onbump_force)
 	if(cost < 0)
 		var/dam_multiplicator = 1
 		if(driver)
@@ -352,7 +352,7 @@ SUBSYSTEM_DEF(carpool)
 		if(onbump_force)
 			for(var/mob/living/L in src)
 				if(L)
-					var/dam = round((onbump_force*5)/dam_multiplicator)
+					var/dam = round((onbump_force*10)/dam_multiplicator)
 					if(driver)
 						if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
 							dam = round(dam/2)
