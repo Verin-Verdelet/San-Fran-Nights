@@ -26,7 +26,8 @@
 	button_icon_state = "dominate"
 	check_flags = AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
-	var/cool_down = 0
+	var/cool_down = 10
+	var/list/mob/living/carbon/human/fail_list = list()
 
 /datum/action/dominate/Trigger()
 	. = ..()
