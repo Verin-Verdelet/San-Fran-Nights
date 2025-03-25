@@ -302,11 +302,11 @@
 
 /atom/movable/screen/vtm_zone
 	name = "zone"
-	icon = 'code/modules/wod13/48x48.dmi'
+	icon = 'code/modules/wod13/icons.dmi'
 	icon_state = "masquerade"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
-	alpha = 64
+//	alpha = 64
 
 /atom/movable/screen/blood
 	name = "bloodpool"
@@ -593,7 +593,7 @@
 				animate(H.client, pixel_x = round(view_distance*sin(myangle)), pixel_y = round(view_distance*cos(myangle)), time = time_to_animate)
 
 /mob/living/carbon/Move(atom/newloc, direct, glide_size_override)
-	..()
+	. = ..()
 	if(a_intent == INTENT_HARM && client)
 		setDir(harm_focus)
 	else
@@ -866,6 +866,12 @@
 	if(hud_used.zone_icon)
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
+//			message_atom.pixel_y = rand(12, 16)
+			hud_used.zone_icon.maptext_width = 96
+			hud_used.zone_icon.maptext_height = 24
+			hud_used.zone_icon.maptext_x = 33
+			hud_used.zone_icon.maptext_y = 4
+			hud_used.zone_icon.maptext = MAPTEXT(V.name)
 			hud_used.zone_icon.icon_state = "[V.zone_type]"
 			if(V.zone_type == "elysium")
 				if(!HAS_TRAIT(src, TRAIT_ELYSIUM))

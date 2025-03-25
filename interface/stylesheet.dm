@@ -89,6 +89,7 @@ h1.alert, h2.alert		{color: #000000;}
 .green					{color: #03ff39;}
 .nicegreen				{color: #14a833;}
 .userlove				{color: #FF1493;	font-style: italic; font-weight: bold;	text-shadow: 0 0 6px #ff6dbc;}
+.discosay				{color: #FFFFFF;	background-color: #000000;	text-shadow: 0 0 6px #a7a7a7;}
 .love					{color: #ff006a;	font-style: italic;	text-shadow: 0 0 6px #ff6d6d;}
 .cult					{color: #973e3b;}
 .cultlarge				{color: #973e3b;	font-weight: bold;	font-size: 3;}

@@ -52,7 +52,7 @@
 #define ui_drinkblood "WEST-2:11,SOUTH+3:24"
 #define ui_bloodheal "CENTER+2,SOUTH+1:8"
 #define ui_bloodpower "CENTER+2:16,SOUTH+1:8"
-#define ui_vtm_zone "CENTER-1:24,NORTH-2:24"
+#define ui_vtm_zone "WEST-4:8,SOUTH:8"
 
 //Lower right, persistent menu
 #define ui_throw "WEST-4:15,SOUTH+4:12"

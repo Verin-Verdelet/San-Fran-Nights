@@ -81,7 +81,7 @@
 
 /obj/structure/lamppost/Initialize()
 	. = ..()
-	var/flickering = prob(5)
+	var/flickering = prob(10)
 	if(GLOB.winter)
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
@@ -832,8 +832,12 @@
 				return
 			V.last_extracted = world.time
 			if(!iskindred(src))
-				new /obj/item/drinkable_bloodpack/full(get_step(V, SOUTH))
-				bloodpool = max(0, bloodpool-2)
+				if(bloodquality == BLOOD_QUALITY_HIGH)
+					new /obj/item/drinkable_bloodpack/full/elite(get_step(V, SOUTH))
+					bloodpool = max(0, bloodpool-2)
+				else
+					new /obj/item/drinkable_bloodpack/full(get_step(V, SOUTH))
+					bloodpool = max(0, bloodpool-2)
 			else
 				new /obj/item/drinkable_bloodpack/full/vitae(get_step(V, SOUTH))
 				bloodpool = max(0, bloodpool-4)

@@ -49,7 +49,7 @@
 	cost = 50
 	contains = list(/obj/item/wire_cutters, /obj/item/storage/box/lights/mixed)
 	crate_name = "weapon crate"
-
+/*
 /datum/supply_pack/vampire/bloodpack
 	name = "Blood Pack"
 	desc = "Contains 5 default blood packs."
@@ -63,7 +63,7 @@
 	cost = 300
 	contains = list(/obj/item/drinkable_bloodpack/full/elite, /obj/item/drinkable_bloodpack/full/elite, /obj/item/drinkable_bloodpack/full/elite, /obj/item/drinkable_bloodpack/full/elite, /obj/item/drinkable_bloodpack/full/elite)
 	crate_name = "blood crate"
-
+*/
 
 /datum/supply_pack/vampire/weaponstake
 	name = "Weapon (stake)"
@@ -224,6 +224,13 @@
 	desc = "Contains a crossbow."
 	cost = 1000
 	contains = list(/obj/item/gun/ballistic/shotgun/toy/crossbow/vampire)
+	crate_name = "weapon crate"
+
+/datum/supply_pack/vampire/autoshotgun
+	name = "Weapon (Jaegerspas-XV)"
+	desc = "Contains a Jaegerspas-XV auto shotgun."
+	cost = 5000
+	contains = list(/obj/item/gun/ballistic/automatic/vampire/autoshotgun, /obj/item/ammo_box/magazine/vampautoshot)
 	crate_name = "weapon crate"
 
 /datum/supply_pack/vampire/ak74

@@ -12,6 +12,7 @@
 	var/sound/auspexbeat = sound('code/modules/wod13/sounds/auspex.ogg', repeat = TRUE)
 	caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
 	ADD_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
+	caster.attributes.auspex_buff = level
 	var/loh = FALSE
 	if(!HAS_TRAIT(caster, TRAIT_NIGHT_VISION))
 		ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
@@ -34,6 +35,7 @@
 
 	spawn((delay*level_casting)+caster.discipline_time_plus)
 		if(caster)
+			caster.attributes.auspex_buff = 0
 			if(shitcasted)
 				GLOB.auspex_list -= caster
 			caster.auspex_examine = FALSE

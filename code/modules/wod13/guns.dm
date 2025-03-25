@@ -515,14 +515,11 @@
 	rack_sound = 'sound/weapons/gun/rifle/bolt_out.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/rifle/bolt_in.ogg'
 	tac_reloads = FALSE
-	fire_delay = 40
+	fire_delay = 30
 	burst_size = 1
 	w_class = WEIGHT_CLASS_NORMAL
-	zoomable = TRUE
-	zoom_amt = 10 //Long range, enough to see in front of you, but no tiles behind you.
-	zoom_out_amt = 5
 	slot_flags = ITEM_SLOT_BACK
-	projectile_damage_multiplier = 1.5
+	projectile_damage_multiplier = 3
 	actions_types = list()
 	masquerade_violating = TRUE
 	cost = 250

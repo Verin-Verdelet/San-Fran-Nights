@@ -138,6 +138,7 @@ SUBSYSTEM_DEF(woddices)
 	var/bloodshield_bonus = 0
 	var/lasombra_shield = 0
 	var/tzimisce_bonus = 0
+	var/auspex_buff = 0
 
 	var/diff_curse = 0
 
@@ -252,7 +253,7 @@ SUBSYSTEM_DEF(woddices)
 
 /proc/get_a_firearms(mob/living/Living)
 	if(Living.attributes)
-		return Living.attributes.Firearms
+		return Living.attributes.Firearms+Living.attributes.auspex_buff
 	else
 		return 0
 
@@ -276,7 +277,7 @@ SUBSYSTEM_DEF(woddices)
 
 /proc/get_a_investigation(mob/living/Living)
 	if(Living.attributes)
-		return Living.attributes.Investigation
+		return Living.attributes.Investigation+Living.attributes.auspex_buff
 	else
 		return 0
 
@@ -697,3 +698,144 @@ SUBSYSTEM_DEF(woddices)
 				break
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(host, "vampire", src)
+
+/mob/living/carbon/human
+	var/datum/morality_path/MyPath
+
+/datum/morality_path
+	var/mob/living/carbon/human/owner
+	var/name = "Path"
+	var/desc = "This is a default path for everyone."
+	var/dot = 5
+	var/willpower = 5
+	var/consience = 1
+	var/selfcontrol = 1
+	var/courage = 1
+
+	var/list/ready_events = list()
+	var/murder_victms = 0	//So when it hits 5 it's confirmed mass murder
+
+
+/datum/morality_path/proc/trigger_morality(var/trig_event)
+	if(trig_event in ready_events)
+		return
+	ready_events += trig_event
+//	switch(trig_event)
+//		if("trigger_default")
+//			to_chat(owner, "[icon2html('icons/beast.png', owner)] <span class='secradio'><b>BEAST</b></span><span class='discosay'> — Доверься своему телу. Запугивай людей.</span>")
+
+/datum/morality_path/humanity
+	name = "Humanity"
+	desc = "The Humanity score represents how close a Kindred remains to their human nature, to specific people vital to them, and how easily they slip away from human concerns and instead towards the whims of the Beast."
+
+/datum/morality_path/humanity/trigger_morality(var/trig_event)
+	. = ..()
+	/*
+	switch(trig_event)
+		//humanity lowers
+		("slur")
+		("attackfirst")
+		("steal")
+		("robbery")
+		("drying")
+			to_chat(owner, "[icon2html('icons/beast.png', owner)] <span class='secradio'><b>BEAST</b></span><span class='discosay'> — Тебе не занимать голода... Мне это нравится. Этот вкус, этот запах. Теперь это пустой сосуд, обёртка от сладкой конфеты, мусор. А что? Смертные тоже мусорят, чем мы с тобой хуже, а?</span>")
+		("drugdealing")
+		("killparticipation")
+		("killcommit")
+		("sadism")
+		("murder")
+		("massmurder")
+*/
+//"slur" = 10, "attackfirst" = 9, "failing" = 8 "steal" = 7, "robbery" = 6, "drying" = 5, "drugdealing" = 4, "killparticipation" = 3, "killcommit" = 2, "sadism" = 1, "burningalive" = 1, "massmurder" = 0
+
+//BEAST "animaldrink", "baddrink", "gooddrink", "firstfeed", "suncoming", "rotshreck", "bloodhunger"
+//SELF-CONTROL "hunger", "bloodhunger"
+//COURAGE "flying", "attacked", "deadexamine", "crinos", "rotshreck"
+//CONSIENCE "corpseitems", "elysiumfight", "animaldrink", "gettingdrunk", "gettinghigh"
+
+//	var/analyze_virtue = /datum/virtue
+//	var/control_virtue = /datum/virtue
+//	var/courage_virtue = /datum/virtue
+//	var/beast_virtue = /datum/virtue
+//	var/list/virtues = list(/datum/virtue)
+
+/datum/morality_path/proc/adjust(var/point)
+	if(point < 1 && dot > 0)
+		dot = dot+point
+		SEND_SOUND(owner, sound('code/modules/wod13/sounds/humanity_loss.ogg', 0, 0, 75))
+		to_chat(owner, "<span class='userdanger'><b>[name] decreased!</b></span>")
+	if(point > 1 && dot < 10)
+		dot = dot+point
+		SEND_SOUND(owner, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
+		to_chat(owner, "<span class='userhelp'><b>[name] increased!</b></span>")
+
+	willpower = min(dot, willpower)
+	var/datum/preferences/P = GLOB.preferences_datums[ckey(owner.key)]
+	if(P)
+		if(P.humanity != owner.humanity)
+			P.humanity = owner.humanity
+			P.save_preferences()
+			P.save_character()
+		if(!owner.antifrenzy)
+			if(P.humanity < 1)
+				owner.enter_frenzymod()
+				reset_shit(owner)
+				to_chat(owner, "<span class='userdanger'>You have lost control of the void within you, and it has taken your body. Be more humane next time.</span>")
+				owner.ghostize(FALSE)
+				P.reason_of_death = "Lost control to the Beast ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
+/*
+/datum/morality_path/Initialize()
+	var/list/initialized_virtues = list()
+	for(var/i in virtues)
+		var/datum/virtue/V = new i
+		V.path = src
+		initialized_virtues += V
+	virtues = initialized_virtues
+
+/datum/virtue
+	var/datum/morality_path/path
+	var/name = "VIRTUE"
+	var/icon = 'icons/beast.png'
+	var/dot = 1
+	var/span = "<span class='secradio'>"
+	var/list/ready_events = list()
+
+/datum/virtue/proc/trigger(var/trigger_event)
+	if(trigger_event in ready_events)
+		return
+	ready_events += trigger_event
+	switch(trigger_event)
+		if("trigger_default")
+			to_chat(path.owner, "[icon2html(icon, path.owner)] [span]<b>[name]</b></span><span class='discosay'> — Доверься своему телу. Запугивай людей.</span>")
+
+/datum/virtue/beast
+	name = "ЗВЕРЬ"
+	icon = 'icons/beast.png'
+	dot = 5
+	span = "<span class='secradio'>"
+
+/datum/virtue/consience
+	name = "СОЗНАТЕЛЬНОСТЬ"
+	icon = 'icons/consience.png'
+//	dot = 1
+	span = "<span class='comradio'>"
+
+/datum/virtue/selfcontrol
+	name = "САМОКОНТРОЛЬ"
+	icon = 'icons/self-control.png'
+//	dot = 1
+	span = "<span class='medradio'>"
+
+/datum/virtue/courage
+	name = "СМЕЛОСТЬ"
+	icon = 'icons/courage.png'
+//	dot = 1
+	span = "<span class='sciradio'>"
+
+/datum/morality_path/humanity
+	name = "Человечность"
+	desc = "Она показывает, сколько человеческого осталось от персонажа после Объятий. Именно Человечность не дает вампиру стать кровожадным монстром, который думает только о своем пропитании."
+//	dot = 5
+//	willpower = 5
+	virtues = list(/datum/virtue/beast, /datum/virtue/consience, /datum/virtue/selfcontrol, /datum/virtue/courage)
+*/
