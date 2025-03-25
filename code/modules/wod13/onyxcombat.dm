@@ -869,7 +869,7 @@
 //			message_atom.pixel_y = rand(12, 16)
 			hud_used.zone_icon.maptext_width = 96
 			hud_used.zone_icon.maptext_height = 24
-			hud_used.zone_icon.maptext_x = 33
+			hud_used.zone_icon.maptext_x = 30
 			hud_used.zone_icon.maptext_y = 4
 			hud_used.zone_icon.maptext = MAPTEXT(V.name)
 			hud_used.zone_icon.icon_state = "[V.zone_type]"
