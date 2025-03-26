@@ -65,7 +65,7 @@
 			MyPath.trigger_morality("attackedfail")
 			caster = P.firer
 			var/datum/cb = CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster))
-			for(var/i in 1 to 30)
+			for(var/i in 1 to 10)
 				addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 			emote("scream")
 			do_jitter_animation(30)
