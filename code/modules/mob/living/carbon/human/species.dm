@@ -1374,7 +1374,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		user.MyPath.trigger_morality("attackfirst")
 
 	if(target.MyPath)
-		if(secret_vampireroll(target.MyPath.courage+target.MyPath.selfcontrol, max(get_a_strength(user), get_a_manipulation(user))+get_a_intimidation(user), src, TRUE, FALSE) > 2)
+		if(secret_vampireroll(target.MyPath.courage+target.MyPath.selfcontrol, max(get_a_strength(user), get_a_manipulation(user))+get_a_intimidation(user), target, TRUE, FALSE) > 2)
 			target.MyPath.trigger_morality("attacked")
 		else
 			target.MyPath.trigger_morality("attackedfail")
@@ -1579,7 +1579,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			ohvampire.MyPath.trigger_morality("attackfirst")
 
 	if(H.MyPath)
-		if(secret_vampireroll(H.MyPath.courage+H.MyPath.selfcontrol, max(get_a_strength(user), get_a_manipulation(user))+get_a_intimidation(user), src, TRUE, FALSE) > 2)
+		if(secret_vampireroll(H.MyPath.courage+H.MyPath.selfcontrol, max(get_a_strength(user), get_a_manipulation(user))+get_a_intimidation(user), H, TRUE, FALSE) > 2)
 			H.MyPath.trigger_morality("attacked")
 		else
 			H.MyPath.trigger_morality("attackedfail")
