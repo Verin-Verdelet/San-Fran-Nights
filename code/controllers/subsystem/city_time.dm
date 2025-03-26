@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(city_time)
 								if(iskindred(H) && H.clane)
 									if(H.clane.name == "Toreador")
 										toreador_bonus = 1*/
-								if(H.total_erp > 1500)
+								if(H.total_erp > 4500)
 									P.add_experience(3)
 									H.total_erp = 0
 								if(H.total_cleaned > 25)
@@ -139,7 +139,7 @@ SUBSYSTEM_DEF(city_time)
 								if(iskindred(H) && H.clane)
 									if(H.clane.name == "Toreador")
 										toreador_bonus = 1*/
-								if(H.total_erp > 1500)
+								if(H.total_erp > 4500)
 									P.add_experience(3)
 									H.total_erp = 0
 								if(H.total_cleaned > 25)
