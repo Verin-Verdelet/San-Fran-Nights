@@ -1370,7 +1370,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
 
-	if(user.MyPath)
+	if(user.MyPath && user != target)
 		user.MyPath.trigger_morality("attackfirst")
 
 	if(target.MyPath && user != target && !target.warform)
@@ -1576,7 +1576,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	// Allows you to put in item-specific reactions based on species
 	if(ishuman(user))
 		var/mob/living/carbon/human/ohvampire = user
-		if(ohvampire.MyPath)
+		if(ohvampire.MyPath && user != H && I.force > 5)
 			ohvampire.MyPath.trigger_morality("attackfirst")
 
 	if(H.MyPath && user != H && !H.warform)

@@ -56,7 +56,7 @@
 /mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	if(ishuman(P.firer))
 		var/mob/living/carbon/human/ohvampire = P.firer
-		if(ohvampire.MyPath)
+		if(ohvampire.MyPath && P.firer != src)
 			ohvampire.MyPath.trigger_morality("attackfirst")
 	if(MyPath && src != P.firer && !warform)
 		if(MyPath.ready_events["attacked"] == 0 && MyPath.ready_events["attackedfail"] == 0)
