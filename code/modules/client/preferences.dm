@@ -507,7 +507,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //				dat += "<b>Path of [enlightenment ? "Enlightenment" : "Humanity"]:</b> [humanity]/10"
 				dat += "<b>Humanity:</b> [humanity]/10"
 				//if(SSwhitelists.is_whitelisted(parent.ckey, "enlightenment") && !slotlocked)
-//				if ((true_experience >= (humanity * 2)) && (humanity < 10))
+				if ((true_experience >= (humanity * 2)) && (humanity < 10))
 					dat += " <a href='?_src_=prefs;preference=path;task=input'>Restore Humanity ([humanity * 2])</a>"
 				dat += "<br>"
 				dat += "Consience: [consience]/5 <a href='?_src_=prefs;preference=consience;task=input'>Adjust</a><br>"
