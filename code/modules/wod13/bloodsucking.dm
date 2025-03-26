@@ -177,11 +177,12 @@
 								P.diablerist = 1
 								P.generation_bonus = generation-mob.generation
 								generation = mob.generation
+//								P.generation = mob.generation
 							diablerist = 1
 //							if(P2)
 //								P2.reset_character()
-							maxHealth = initial(maxHealth)+max(0, 50*(13-generation))
-							health = initial(health)+max(0, 50*(13-generation))
+//							maxHealth = initial(maxHealth)+max(0, 50*(13-generation))
+//							health = initial(health)+max(0, 50*(13-generation))
 							var/datum/brain_trauma/special/imaginary_friend/trauma = gain_trauma(/datum/brain_trauma/special/imaginary_friend)
 							trauma.friend.key = K.key
 							mob.death()
