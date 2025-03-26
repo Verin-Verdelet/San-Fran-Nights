@@ -1374,19 +1374,20 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		user.MyPath.trigger_morality("attackfirst")
 
 	if(target.MyPath)
-		if(secret_vampireroll(target.MyPath.courage, max(get_a_strength(user), get_a_manipulation(user))+get_a_intimidation(user), target, TRUE, FALSE) > 2)
-			target.MyPath.trigger_morality("attacked")
-		else
-			target.MyPath.trigger_morality("attackedfail")
-			target.caster = user
-			var/datum/cb = CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster))
-			for(var/i in 1 to 10)
-				addtimer(cb, (i - 1)*target.total_multiplicative_slowdown())
-			target.emote("scream")
-			target.do_jitter_animation(30)
-		spawn(3 MINUTES)
-			target.MyPath.ready_events["attacked"] = 0
-			target.MyPath.ready_events["attackedfail"] = 0
+		if(target.MyPath.ready_events["attacked"] == 0 && target.MyPath.ready_events["attackedfail"] == 0)
+			if(secret_vampireroll(target.MyPath.courage, max(get_a_strength(user), get_a_manipulation(user))+get_a_intimidation(user), target, TRUE, FALSE) > 2)
+				target.MyPath.trigger_morality("attacked")
+			else
+				target.MyPath.trigger_morality("attackedfail")
+				target.caster = user
+				var/datum/cb = CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster))
+				for(var/i in 1 to 10)
+					addtimer(cb, (i - 1)*target.total_multiplicative_slowdown())
+				target.emote("scream")
+				target.do_jitter_animation(30)
+			spawn(3 MINUTES)
+				target.MyPath.ready_events["attacked"] = 0
+				target.MyPath.ready_events["attackedfail"] = 0
 
 	var/add_hard = 0
 	if(user.zone_selected == BODY_ZONE_L_ARM || user.zone_selected == BODY_ZONE_R_ARM || user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG)
@@ -1579,19 +1580,20 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			ohvampire.MyPath.trigger_morality("attackfirst")
 
 	if(H.MyPath)
-		if(secret_vampireroll(H.MyPath.courage, max(get_a_strength(user), get_a_manipulation(user))+get_a_intimidation(user), H, TRUE, FALSE) > 2)
-			H.MyPath.trigger_morality("attacked")
-		else
-			H.MyPath.trigger_morality("attackedfail")
-			H.caster = user
-			var/datum/cb = CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster))
-			for(var/i in 1 to 10)
-				addtimer(cb, (i - 1)*H.total_multiplicative_slowdown())
-			H.emote("scream")
-			H.do_jitter_animation(30)
-		spawn(3 MINUTES)
-			H.MyPath.ready_events["attacked"] = 0
-			H.MyPath.ready_events["attackedfail"] = 0
+		if(H.MyPath.ready_events["attacked"] == 0 && H.MyPath.ready_events["attackedfail"] == 0)
+			if(secret_vampireroll(H.MyPath.courage, max(get_a_strength(user), get_a_manipulation(user))+get_a_intimidation(user), H, TRUE, FALSE) > 2)
+				H.MyPath.trigger_morality("attacked")
+			else
+				H.MyPath.trigger_morality("attackedfail")
+				H.caster = user
+				var/datum/cb = CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster))
+				for(var/i in 1 to 10)
+					addtimer(cb, (i - 1)*H.total_multiplicative_slowdown())
+				H.emote("scream")
+				H.do_jitter_animation(30)
+			spawn(3 MINUTES)
+				H.MyPath.ready_events["attacked"] = 0
+				H.MyPath.ready_events["attackedfail"] = 0
 
 	var/add_hard = 0
 	if(user.zone_selected == BODY_ZONE_L_ARM || user.zone_selected == BODY_ZONE_R_ARM || user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG)
