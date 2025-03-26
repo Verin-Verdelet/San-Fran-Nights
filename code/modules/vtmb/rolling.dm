@@ -789,7 +789,7 @@ SUBSYSTEM_DEF(woddices)
 						if(1)
 							to_chat(owner, "<font size=12>[icon2html('icons/self-control.png', owner)]</font> <span class='medradio'><b>SELF-CONTROL</b></span> <span class='info'>Failure</span> <span class='discosay'> — Это был хороший ход, но, плохая идея.</span>")
 						if(2)
-							var/who_to_beat = "жену"
+							var/who_to_beat = "жены"
 							if(owner.gender == FEMALE)
 								if(!HAS_TRAIT(owner, TRAIT_HOMOSEXUAL))
 									who_to_beat = "мужа"
