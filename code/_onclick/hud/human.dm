@@ -417,6 +417,11 @@
 	zone_icon.hud = src
 	static_inventory += zone_icon
 
+	secret_zone_icon = new /atom/movable/screen()
+	secret_zone_icon.screen_loc = ui_vtm_zone
+	secret_zone_icon.hud = src
+	static_inventory += secret_zone_icon
+
 	pull_icon = new /atom/movable/screen/pull()
 	pull_icon.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
 	pull_icon.update_icon()

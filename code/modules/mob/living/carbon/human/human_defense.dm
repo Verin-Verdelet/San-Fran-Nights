@@ -54,6 +54,24 @@
 
 
 /mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
+	if(ishuman(P.firer))
+		var/mob/living/carbon/human/ohvampire = P.firer
+		if(ohvampire.MyPath)
+			ohvampire.MyPath.trigger_morality("attackfirst")
+	if(MyPath)
+		if(secret_vampireroll(MyPath.courage+MyPath.selfcontrol, 6, src, TRUE, FALSE) > 2)
+			MyPath.trigger_morality("attacked")
+		else
+			MyPath.trigger_morality("attackedfail")
+			caster = P.firer
+			var/datum/cb = CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster))
+			for(var/i in 1 to 30)
+				addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+			emote("scream")
+			do_jitter_animation(30)
+		spawn(3 MINUTES)
+			MyPath.ready_events["attacked"] = 0
+			MyPath.ready_events["attackedfail"] = 0
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCK_PROJECTILES) && !HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		if(prob(75))
 			src.visible_message("<span class='danger'>[src] effortlessly swats the projectile aside! [p_they(TRUE)] can block bullets with [p_their()] bare hands!</span>", "<span class='userdanger'>You deflect the projectile!</span>")

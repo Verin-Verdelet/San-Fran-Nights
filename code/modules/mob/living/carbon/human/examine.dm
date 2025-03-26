@@ -512,6 +512,10 @@
 
 	if(ishuman(user))
 		. += "<a href='?src=[REF(src)];masquerade=1'>Spot a Masquerade violation</a>"
+		var/mob/living/carbon/human/ohvampire = user
+		if(ohvampire.MyPath)
+			if(stat == DEAD)
+				ohvampire.MyPath.trigger_morality("deadexamine")
 	if(isobserver(user) || ishuman(user))
 		. += "<a href='?src=[REF(src)];headshot=1'>View headshot</a>"
 

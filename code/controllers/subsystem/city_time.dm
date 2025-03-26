@@ -139,7 +139,7 @@ SUBSYSTEM_DEF(city_time)
 								if(iskindred(H) && H.clane)
 									if(H.clane.name == "Toreador")
 										toreador_bonus = 1*/
-								if(H.total_erp > 9000)
+								if(H.total_erp > 1500)
 									P.add_experience(3)
 									H.total_erp = 0
 								if(H.total_cleaned > 25)
@@ -158,6 +158,10 @@ SUBSYSTEM_DEF(city_time)
 
 	if(hour == 5 && minutes == 45)
 		to_chat(world, "<span class='ghostalert'>First rays of the sun illuminate the sky...</span>")
+		for(var/mob/living/carbon/human/ohvampire in GLOB.player_list)
+			if(ohvampire)
+				if(ohvampire.MyPath)
+					ohvampire.MyPath.trigger_morality("suncoming")
 
 	if(hour == 6 && minutes == 0)
 		to_chat(world, "<span class='ghostalert'>THE NIGHT IS OVER.</span>")

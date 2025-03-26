@@ -1370,6 +1370,24 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
 
+	if(user.MyPath)
+		user.MyPath.trigger_morality("attackfirst")
+
+	if(target.MyPath)
+		if(secret_vampireroll(target.MyPath.courage+target.MyPath.selfcontrol, 6, src, TRUE, FALSE) > 2)
+			target.MyPath.trigger_morality("attacked")
+		else
+			target.MyPath.trigger_morality("attackedfail")
+			target.caster = user
+			var/datum/cb = CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster))
+			for(var/i in 1 to 30)
+				addtimer(cb, (i - 1)*target.total_multiplicative_slowdown())
+			target.emote("scream")
+			target.do_jitter_animation(30)
+		spawn(3 MINUTES)
+			target.MyPath.ready_events["attacked"] = 0
+			target.MyPath.ready_events["attackedfail"] = 0
+
 	var/add_hard = 0
 	if(user.zone_selected == BODY_ZONE_L_ARM || user.zone_selected == BODY_ZONE_R_ARM || user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG)
 		add_hard = 1
@@ -1555,6 +1573,26 @@ GLOBAL_LIST_EMPTY(selectable_races)
 
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
+	if(ishuman(user))
+		var/mob/living/carbon/human/ohvampire = user
+		if(ohvampire.MyPath)
+			ohvampire.MyPath.trigger_morality("attackfirst")
+
+	if(H.MyPath)
+		if(secret_vampireroll(H.MyPath.courage+H.MyPath.selfcontrol, 6, src, TRUE, FALSE) > 2)
+			H.MyPath.trigger_morality("attacked")
+		else
+			H.MyPath.trigger_morality("attackedfail")
+			H.caster = user
+			var/datum/cb = CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster))
+			for(var/i in 1 to 30)
+				addtimer(cb, (i - 1)*H.total_multiplicative_slowdown())
+			H.emote("scream")
+			H.do_jitter_animation(30)
+		spawn(3 MINUTES)
+			H.MyPath.ready_events["attacked"] = 0
+			H.MyPath.ready_events["attackedfail"] = 0
+
 	var/add_hard = 0
 	if(user.zone_selected == BODY_ZONE_L_ARM || user.zone_selected == BODY_ZONE_R_ARM || user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG)
 		add_hard = 1
@@ -2080,6 +2118,8 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	if(!CanIgniteMob(H))
 		return TRUE
 	if(H.on_fire)
+		if(H.MyPath)
+			H.MyPath.trigger_morality("onfire")
 		//the fire tries to damage the exposed clothes and items
 		var/list/burning_items = list()
 		var/obscured = H.check_obscured_slots(TRUE)
