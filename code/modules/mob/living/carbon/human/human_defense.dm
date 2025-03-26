@@ -58,7 +58,7 @@
 		var/mob/living/carbon/human/ohvampire = P.firer
 		if(ohvampire.MyPath)
 			ohvampire.MyPath.trigger_morality("attackfirst")
-	if(MyPath)
+	if(MyPath && src != P.firer)
 		if(MyPath.ready_events["attacked"] == 0 && MyPath.ready_events["attackedfail"] == 0)
 			if(secret_vampireroll(MyPath.courage, 3, src, TRUE, FALSE) > 2)
 				MyPath.trigger_morality("attacked")
