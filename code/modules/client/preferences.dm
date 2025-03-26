@@ -2566,19 +2566,28 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						languages += result
 
 				if("consience")
+					if (alert("Are you sure you want to change your Virtues? This will reset your Humanity.", "Confirmation", "Yes", "No") != "Yes")
+						return
 					var/result = input(user, "Adjust Consience (1 to [min(5, 9-(selfcontrol+courage))])", "Consience") as null|num
 					result = clamp(result, 1, min(5, 10-(selfcontrol+courage)))
 					consience = result
+					humanity = consience+selfcontrol
 
 				if("selfcontrol")
+					if (alert("Are you sure you want to change your Virtues? This will reset your Humanity.", "Confirmation", "Yes", "No") != "Yes")
+						return
 					var/result = input(user, "Adjust Self-Control (1 to [min(5, 9-(consience+courage))])", "Self-Control") as null|num
 					result = clamp(result, 1, min(5, 10-(consience+courage)))
 					selfcontrol = result
+					humanity = consience+selfcontrol
 
 				if("courage")
+					if (alert("Are you sure you want to change your Virtues? This will reset your Humanity.", "Confirmation", "Yes", "No") != "Yes")
+						return
 					var/result = input(user, "Adjust Courage (1 to [min(5, 9-(consience+selfcontrol))])", "Courage") as null|num
 					result = clamp(result, 1, min(5, 10-(consience+selfcontrol)))
 					courage = result
+					humanity = consience+selfcontrol
 
 				if("dharmarise")
 					if ((true_experience < 20) || (dharma_level >= 6) || !(pref_species.id == "kuei-jin"))
@@ -3356,6 +3365,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.clane.enlightenment = FALSE
 		character.MyPath = new /datum/morality_path/humanity()
 		character.MyPath.dot = humanity
+		character.MyPath.willpower = humanity
 		character.MyPath.owner = character
 		character.MyPath.consience = consience
 		character.MyPath.selfcontrol = selfcontrol
