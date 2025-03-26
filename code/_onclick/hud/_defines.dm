@@ -34,6 +34,8 @@
 //Lower left, persistent menu
 #define ui_inventory "WEST:6,SOUTH:5"
 
+#define ui_announce "WEST+7:16,SOUTH+7:16"
+
 #define ui_full_inventory "WEST-4,SOUTH"
 
 //Middle left indicators
