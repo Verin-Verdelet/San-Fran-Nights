@@ -1035,7 +1035,7 @@
 				var/mob/living/carbon/human/H = src
 				var/mob/living/carbon/human/NPC = who
 				var/area/A = get_area(src)
-				if(NPC.stat <= SOFT_CRIT || A.name != "Clinic")
+				if(NPC.stat >= SOFT_CRIT || A.name != "Clinic")
 					if(istype(what, /obj/item/clothing) || istype(what, /obj/item/vamp/keys) || istype(what, /obj/item/stack/dollar))
 						if(H.MyPath)
 							H.MyPath.trigger_morality("robbery")
