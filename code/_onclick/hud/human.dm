@@ -149,6 +149,12 @@
 	using.hud = src
 	static_inventory += using
 
+	using = new /atom/movable/screen/will_power
+	using.icon = 'code/modules/wod13/UI/buttons32.dmi'
+	using.screen_loc = ui_will
+	using.hud = src
+	static_inventory += using
+
 	using = new /atom/movable/screen/drop()
 	using.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
 	using.screen_loc = ui_drop

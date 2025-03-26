@@ -396,8 +396,11 @@ SUBSYSTEM_DEF(woddices)
 			to_chat(rollperformer, "<b>No dicepool!</b>")
 		return 0
 	var/clan_difficulty = 0
+	var/autosuccesses = 0
 	if(ishuman(rollperformer))
 		var/mob/living/carbon/human/Roller = rollperformer
+		if(Roller.willpower_auto)
+			autosuccesses = 3
 		if(Roller.clane?.name == "Followers of Set")
 			var/datum/vampireclane/setite/Setite = Roller.clane
 			var/turf/T = get_turf(Roller)
@@ -410,19 +413,24 @@ SUBSYSTEM_DEF(woddices)
 					clan_difficulty = 1
 	hardness = clamp(hardness+rollperformer.attributes.diff_curse+clan_difficulty, 1, 10)
 	var/dices_decap = 0
-	if(decap_rolls)
+	if(decap_rolls && !autosuccesses)
 		dices_decap = rollperformer.get_health_difficulty()
 	dices_num = max(1, dices_num-dices_decap)
 	var/wins = 0
 	var/brokes = 0
 	var/result = ""
 	for(var/i in 1 to dices_num)
-		var/roll = rand(1, 10)
-		if(roll == 1)
-			brokes += 1
-		else if(roll >= hardness || roll == 10)
+		if(autosuccesses)
 			wins += 1
-		result += get_dice_image(roll, hardness)
+			result += "<span class='medradio'>⓿</span>"
+			autosuccesses = autosuccesses-1
+		else
+			var/roll = rand(1, 10)
+			if(roll == 1)
+				brokes += 1
+			else if(roll >= hardness || roll == 10)
+				wins += 1
+			result += get_dice_image(roll, hardness)
 	wins = wins-brokes
 	if(!stealthy)
 		to_chat(rollperformer, result)
@@ -701,6 +709,7 @@ SUBSYSTEM_DEF(woddices)
 
 /mob/living/carbon/human
 	var/datum/morality_path/MyPath
+	var/willpower_auto = FALSE
 
 /datum/morality_path
 	var/mob/living/carbon/human/owner
@@ -1228,6 +1237,7 @@ SUBSYSTEM_DEF(woddices)
 		to_chat(owner, "<span class='userdanger'><b>[name] decreased!</b></span>")
 	if(point > 1 && dot < 10)
 		dot = dot+point
+		willpower = willpower+1
 		SEND_SOUND(owner, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
 		to_chat(owner, "<span class='userhelp'><b>[name] increased!</b></span>")
 
