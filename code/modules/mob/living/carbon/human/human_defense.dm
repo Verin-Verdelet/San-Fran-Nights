@@ -59,7 +59,7 @@
 		if(ohvampire.MyPath)
 			ohvampire.MyPath.trigger_morality("attackfirst")
 	if(MyPath)
-		if(secret_vampireroll(MyPath.courage+MyPath.selfcontrol, 6, src, TRUE, FALSE) > 2)
+		if(secret_vampireroll(MyPath.courage+MyPath.selfcontrol, 3, src, TRUE, FALSE) > 2)
 			MyPath.trigger_morality("attacked")
 		else
 			MyPath.trigger_morality("attackedfail")
