@@ -190,3 +190,4 @@
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
 	.["identifier"] = CONFIG_GET(string/serversqlname)
+
