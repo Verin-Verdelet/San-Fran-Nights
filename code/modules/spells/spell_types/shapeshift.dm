@@ -145,8 +145,8 @@
 	if(!istype(shape))
 		CRASH("shapeshift holder created outside mob/living")
 	stored = caster
-//	if(stored.mind)
-//		stored.mind.transfer_to(shape)
+	if(stored.mind)
+		stored.mind.transfer_to(shape)
 	stored.forceMove(src)
 	stored.notransform = TRUE
 	if(source.convert_damage)
