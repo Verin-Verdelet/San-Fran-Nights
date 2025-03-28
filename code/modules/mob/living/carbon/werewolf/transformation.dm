@@ -267,7 +267,7 @@
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/BZ
 
 /datum/action/end_warform/Trigger()
-	H.warform.end()
 	H.attributes.strength_bonus = 0
 	H.attributes.dexterity_bonus = 0
 	H.attributes.stamina_bonus = 0
+	H.warform.end()
