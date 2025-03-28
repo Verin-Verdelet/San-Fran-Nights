@@ -249,7 +249,7 @@
 		warform.my_creator = owner
 	owner.warform = src
 	var/datum/action/end_warform/R = new
-	R.Grant(owner)
+	R.Grant(H)
 
 /datum/warform/proc/end()
 	Shapeshift.Restore(humanform)
