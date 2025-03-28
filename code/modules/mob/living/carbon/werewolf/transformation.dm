@@ -252,7 +252,7 @@
 	R.Grant(H)
 
 /datum/warform/proc/end()
-	Shapeshift.Restore(humanform)
+	Shapeshift.Restore(Shapeshift.myshape)
 	for(var/datum/action/end_warform/W in humanform.actions)
 		if(W)
 			W.Remove(humanform)
