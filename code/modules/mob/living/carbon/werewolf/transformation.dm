@@ -267,7 +267,10 @@
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/BZ
 
 /datum/action/end_warform/Trigger()
-	H.attributes.strength_bonus = 0
-	H.attributes.dexterity_bonus = 0
-	H.attributes.stamina_bonus = 0
-	H.warform.end()
+	. = ..()
+	if(ishostile(owner))
+		var/mob/living/simple_animal/hostile/Lviv = owner
+		Lviv.warform.warform.attributes.strength_bonus = 0
+		Lviv.warform.warform.attributes.dexterity_bonus = 0
+		Lviv.warform.warform.attributes.stamina_bonus = 0
+		Lviv.warform.warform.warform.end()
