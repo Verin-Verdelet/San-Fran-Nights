@@ -656,14 +656,6 @@
 							HUY.client.pixel_y = 0
 						else
 							to_chat(HUY, "<span class='notice'>You are looking far away.</span>")
-		if(HUY.warform)
-			if(istype(src, /obj) || istype(src, /mob))
-				if(Adjacent(HUY.warform.warform))
-					return HUY.warform.warform.ClickOn(src)
-				else
-					return
-			if(!istype(src, /atom/movable/screen/movable/action_button))
-				return
 	..()
 /*
 /atom/movable/screen/disciplines/Initialize()

@@ -250,7 +250,6 @@
 	owner.warform = src
 	var/datum/action/end_warform/R = new
 	R.Grant(owner)
-	owner.forceMove(warform)
 
 /datum/warform/proc/end()
 	Shapeshift.Restore(humanform)
