@@ -205,8 +205,8 @@
 	restoring = TRUE
 	stored.forceMove(shape.loc)
 	stored.notransform = FALSE
-//	if(shape.mind)
-//		shape.mind.transfer_to(stored)
+	if(shape.mind)
+		shape.mind.transfer_to(stored)
 	if(death)
 		stored.death()
 	else if(source.convert_damage)
