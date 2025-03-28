@@ -151,6 +151,8 @@
 	.["revision"] = GLOB.revdata.commit
 	.["revision_date"] = GLOB.revdata.date
 	.["hub"] = GLOB.hub_visibility
+	.["identifier"] = CONFIG_GET(string/serversqlname)
+
 
 
 	var/list/adm = get_admin_counts()
@@ -189,5 +191,4 @@
 		// Shuttle status, see /__DEFINES/stat.dm
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
-	.["identifier"] = CONFIG_GET(string/serversqlname)
 
