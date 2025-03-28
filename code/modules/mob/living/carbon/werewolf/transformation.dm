@@ -267,9 +267,7 @@
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/BZ
 
 /datum/action/end_warform/Trigger()
-	if(istype(owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = owner
-		H.warform.end()
-		H.attributes.strength_bonus = 0
-		H.attributes.dexterity_bonus = 0
-		H.attributes.stamina_bonus = 0
+	H.warform.end()
+	H.attributes.strength_bonus = 0
+	H.attributes.dexterity_bonus = 0
+	H.attributes.stamina_bonus = 0
