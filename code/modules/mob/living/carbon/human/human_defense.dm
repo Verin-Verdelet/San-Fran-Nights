@@ -82,8 +82,8 @@
 			emote("flip")
 			return BULLET_ACT_FORCE_PIERCE
 	var/my_dodge_chances = get_a_dexterity(src)+get_a_alertness(src)-getarmor(def_zone, LETHAL)
-	if(my_dodge_chances && stat == 0)
-		if(secret_vampireroll(my_dodge_chances, 7+get_health_difficulty()+1-body_position, src, TRUE) >= 2)
+	if(my_dodge_chances && stat == 0 && body_position == STANDING_UP && get_dist(src, P.firer) >= 3 && angle2dir_cardinal(P.original_angle) != dir)
+		if(secret_vampireroll(my_dodge_chances, 6+get_health_difficulty(), src, TRUE) >= 3)
 			var/matrix/initial_transform = matrix(transform)
 			var/matrix/rotated_transform = transform.Turn(pick(-15, 15))
 			animate(src, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
@@ -378,7 +378,7 @@
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
-	var/modifikator = secret_vampireroll(get_a_strength(M)+get_a_brawl(M), 6, M)
+	var/modifikator = secret_vampireroll(get_a_strength(M)+get_a_brawl(M), 4, M)
 	if(modifikator <= 0)
 		M.visible_message("<span class='warning'>[M] fails to attack [src]!</span>", \
 						"<span class='userdanger'>You fail to attack [src]!</span>")

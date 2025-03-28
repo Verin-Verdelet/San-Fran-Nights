@@ -1397,7 +1397,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	if(user.zone_selected == BODY_ZONE_PRECISE_EYES || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		add_hard = 3
 
-	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user), 6+add_hard, user)
+	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user), 4+add_hard, user)
 	var/atk_verb = user.dna.species.attack_verb
 	if(modifikator == -1)
 		target = user
@@ -1448,8 +1448,8 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			miss_chance = 0
 
 		var/my_dodge_chances = get_a_dexterity(target)+get_a_alertness(target)-target.getarmor(user.zone_selected, LETHAL)
-		if(my_dodge_chances && target.stat == 0)
-			if(secret_vampireroll(my_dodge_chances, 6+target.get_health_difficulty(), target, TRUE) >= 2)
+		if(my_dodge_chances && target.stat == 0 && target.body_position == STANDING_UP && user.dir != target.dir)
+			if(secret_vampireroll(my_dodge_chances, 6+target.get_health_difficulty(), target, TRUE) >= 3)
 				var/matrix/initial_transform = matrix(target.transform)
 				var/matrix/rotated_transform = target.transform.Turn(pick(-15, 15))
 				animate(target, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
@@ -1606,7 +1606,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	if(I.attack_diff_override > 0)
 		modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user), I.attack_diff_override, user)
 	else
-		modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user), 6+add_hard, user)
+		modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user), 4+add_hard, user)
 	if(modifikator == -1)
 		user.visible_message("<span class='warning'>[user] slips, trying to swing [I]!</span>", \
 						"<span class='userdanger'>You slip, trying to swing [I]!</span>")
@@ -1638,8 +1638,8 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		damagtype = AGGRAVATED
 
 	var/my_dodge_chances = get_a_dexterity(H)+get_a_alertness(H)-H.getarmor(def_zone, LETHAL)
-	if(my_dodge_chances && H.stat == 0)
-		if(secret_vampireroll(my_dodge_chances, 7+H.get_health_difficulty(), H, TRUE) >= 2)
+	if(my_dodge_chances && H.stat == 0 && H.body_position == STANDING_UP && user.dir != H.dir)
+		if(secret_vampireroll(my_dodge_chances, 6+H.get_health_difficulty(), H, TRUE) >= 3)
 			var/matrix/initial_transform = matrix(H.transform)
 			var/matrix/rotated_transform = H.transform.Turn(pick(-15, 15))
 			animate(H, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
