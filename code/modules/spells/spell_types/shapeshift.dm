@@ -101,7 +101,7 @@
 	myshape = shape
 	if(istype(shape, /mob/living/simple_animal/hostile))
 		var/mob/living/simple_animal/hostile/hostile = shape
-		hostile.my_creator = caster
+//		hostile.my_creator = caster
 		hostile.attributes = caster.attributes
 	H = new(shape,src,caster)
 
@@ -145,8 +145,8 @@
 	if(!istype(shape))
 		CRASH("shapeshift holder created outside mob/living")
 	stored = caster
-	if(stored.mind)
-		stored.mind.transfer_to(shape)
+//	if(stored.mind)
+//		stored.mind.transfer_to(shape)
 	stored.forceMove(src)
 	stored.notransform = TRUE
 	if(source.convert_damage)
@@ -205,8 +205,8 @@
 	restoring = TRUE
 	stored.forceMove(shape.loc)
 	stored.notransform = FALSE
-	if(shape.mind)
-		shape.mind.transfer_to(stored)
+//	if(shape.mind)
+//		shape.mind.transfer_to(stored)
 	if(death)
 		stored.death()
 	else if(source.convert_damage)

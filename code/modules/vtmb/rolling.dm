@@ -760,6 +760,15 @@ SUBSYSTEM_DEF(woddices)
 					to_chat(H, "<span class='warning'>[owner] is doing something bad, I need to punish them!")
 					H.mind.dharma.judgement |= owner.real_name
 
+	var/special_role_name
+	if(owner.mind)
+		if(owner.mind.special_role)
+			var/datum/antagonist/A = owner.mind.special_role
+			special_role_name = A.name
+
+	if(is_special_character(owner) && special_role_name != "Ambitious")
+		return
+
 	if(ready_events[trig_event] == 1)
 		return FALSE
 	ready_events[trig_event] = 1
