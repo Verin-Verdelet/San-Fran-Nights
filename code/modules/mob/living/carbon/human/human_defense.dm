@@ -66,11 +66,11 @@
 				if(MyPath.trigger_morality("attackedfail"))
 					caster = P.firer
 					var/datum/cb = CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster))
-					for(var/i in 1 to 10)
+					for(var/i in 1 to 20)
 						addtimer(cb, (i - 1)*total_multiplicative_slowdown())
-					emote("scream")
+//					emote("scream")
 					do_jitter_animation(30)
-			spawn(3 MINUTES)
+			spawn(10 MINUTES)
 				MyPath.ready_events["attacked"] = 0
 				MyPath.ready_events["attackedfail"] = 0
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCK_PROJECTILES) && !HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))

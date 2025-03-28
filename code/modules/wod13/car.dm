@@ -206,7 +206,7 @@ SUBSYSTEM_DEF(carpool)
 			if(!repairing)
 				repairing = TRUE
 				if(do_mob(user, src, 20 SECONDS))
-					var/roll = secret_vampireroll(get_a_dexterity(user)+get_a_security(user), 6, user)
+					var/roll = secret_vampireroll(max(get_a_wits(user), get_a_dexterity(user))+get_a_security(user), 6, user)
 					//(<= 1, break lockpick) (2-9, trigger car alarm), (>= 10, unlock car)
 					if (roll == -1)
 						to_chat(user, "<span class='warning'>Your lockpick broke!</span>")

@@ -353,6 +353,18 @@ SUBSYSTEM_DEF(woddices)
 	else
 		return 3
 
+/proc/get_a_willpower(mob/living/Living)
+	if(ishuman(Living))
+		var/mob/living/carbon/human/ohvampire = Living
+		if(ohvampire.MyPath)
+			return ohvampire.MyPath.willpower
+		else if(ohvampire.mind?.dharma)
+			return ohvampire.mind.dharma.willpower
+		else
+			return ceil(ohvampire.humanity/2)
+	else
+		return 2
+
 /proc/get_dice_image(input, diff)
 	var/dat = ""
 	var/span_end = ""
@@ -1176,9 +1188,25 @@ SUBSYSTEM_DEF(woddices)
 		if ("highspeed")
 			to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span><span class='discosay'> — Больше оборотов, выше скорость, сильнее ветер, и чтобы вдавливаться в столб было не так больно и мучительно!</span>")
 		if ("attacked")
-			to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Success</span> <span class='discosay'> — На тебя напали! Защищайся, как герой! Честь и отвага!</span>")
+			ready_events["attackedfail"] = 1
+			var/replic = rand(1, 3)
+			switch(replic)
+				if(1)
+					to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Success</span> <span class='discosay'> — На тебя напали! Защищайся, как герой! Честь и отвага!</span>")
+				if(2)
+					to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Success</span> <span class='discosay'> — Драка! Перестрелка! Поножовщина! Порно!</span>")
+				if(3)
+					to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Success</span> <span class='discosay'> — Это твой звёздный час, чтобы показать свои боевые навыки.</span>")
 		if ("attackedfail")
-			to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Failure</span> <span class='discosay'> — Знаешь, что я тебе посоветую? Беги, сука, беги!</span>")
+			ready_events["attacked"] = 1
+			var/replic = rand(1, 3)
+			switch(replic)
+				if(1)
+					to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Failure</span> <span class='discosay'> — Я, пожалуй, отойду. Ты тоже, пожалуй, отойди...</span>")
+				if(2)
+					to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Failure</span> <span class='discosay'> — Пережить развод, взять кредит, жить без родителей - это я могу... А это мне не под силу.</span>")
+				if(3)
+					to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Failure</span> <span class='discosay'> — Знаешь, что я тебе посоветую? Беги, сука, беги!</span>")
 
 		//SELF-CONTROL
 		if ("gettingdrunk")

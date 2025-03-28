@@ -1375,17 +1375,17 @@ GLOBAL_LIST_EMPTY(selectable_races)
 
 	if(target.MyPath && user != target && !target.warform)
 		if(target.MyPath.ready_events["attacked"] == 0 && target.MyPath.ready_events["attackedfail"] == 0)
-			if(secret_vampireroll(target.MyPath.courage, max(get_a_strength(user), get_a_manipulation(user))+get_a_intimidation(user), target, TRUE, FALSE) > 2)
+			if(secret_vampireroll(target.MyPath.courage, get_a_intimidation(user)+2, target, TRUE, FALSE) > 2)
 				target.MyPath.trigger_morality("attacked")
 			else
 				target.MyPath.trigger_morality("attackedfail")
 				target.caster = user
 				var/datum/cb = CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster))
-				for(var/i in 1 to 10)
+				for(var/i in 1 to 20)
 					addtimer(cb, (i - 1)*target.total_multiplicative_slowdown())
-				target.emote("scream")
+//				target.emote("scream")
 				target.do_jitter_animation(30)
-			spawn(3 MINUTES)
+			spawn(10 MINUTES)
 				target.MyPath.ready_events["attacked"] = 0
 				target.MyPath.ready_events["attackedfail"] = 0
 
@@ -1581,17 +1581,17 @@ GLOBAL_LIST_EMPTY(selectable_races)
 
 	if(H.MyPath && user != H && !H.warform)
 		if(H.MyPath.ready_events["attacked"] == 0 && H.MyPath.ready_events["attackedfail"] == 0)
-			if(secret_vampireroll(H.MyPath.courage, max(get_a_strength(user), get_a_manipulation(user))+get_a_intimidation(user), H, TRUE, FALSE) > 2)
+			if(secret_vampireroll(H.MyPath.courage, get_a_intimidation(user)+2, H, TRUE, FALSE) > 2)
 				H.MyPath.trigger_morality("attacked")
 			else
 				H.MyPath.trigger_morality("attackedfail")
 				H.caster = user
 				var/datum/cb = CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster))
-				for(var/i in 1 to 10)
+				for(var/i in 1 to 20)
 					addtimer(cb, (i - 1)*H.total_multiplicative_slowdown())
-				H.emote("scream")
+//				H.emote("scream")
 				H.do_jitter_animation(30)
-			spawn(3 MINUTES)
+			spawn(10 MINUTES)
 				H.MyPath.ready_events["attacked"] = 0
 				H.MyPath.ready_events["attackedfail"] = 0
 

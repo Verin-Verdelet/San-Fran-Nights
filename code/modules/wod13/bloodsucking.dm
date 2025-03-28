@@ -149,6 +149,7 @@
 							trauma.friend.key = K.key
 						mob.death()
 						if(P2)
+							P2.reset_character()
 							P2.reason_of_death =  "Diablerized by [true_real_name ? true_real_name : real_name] ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 						adjustBruteLoss(-50, TRUE)
 						adjustFireLoss(-50, TRUE)
@@ -162,7 +163,7 @@
 							log_attack("[key_name(src)] tried to Diablerize [key_name(mob)] and was overtaken.")
 							death()
 							if(P)
-//								P.reset_character()
+								P.reset_character()
 								P.reason_of_death = "Failed the Diablerie ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 //							ghostize(FALSE)
 //							key = K.key
@@ -187,6 +188,7 @@
 							trauma.friend.key = K.key
 							mob.death()
 							if(P2)
+								P2.reset_character()
 								P2.reason_of_death = "Diablerized by [true_real_name ? true_real_name : real_name] ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 					if(client)
 						client.images -= suckbar
