@@ -189,4 +189,4 @@
 		// Shuttle status, see /__DEFINES/stat.dm
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
-
+	.["identifier"] = CONFIG_GET(string/serversqlname)
