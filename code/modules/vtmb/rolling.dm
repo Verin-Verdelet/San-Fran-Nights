@@ -353,6 +353,18 @@ SUBSYSTEM_DEF(woddices)
 	else
 		return 3
 
+/proc/get_a_willpower(mob/living/Living)
+	if(ishuman(Living))
+		var/mob/living/carbon/human/ohvampire = Living
+		if(ohvampire.MyPath)
+			return ohvampire.MyPath.willpower
+		else if(ohvampire.mind?.dharma)
+			return ohvampire.mind.dharma.willpower
+		else
+			return ceil(ohvampire.humanity/2)
+	else
+		return 2
+
 /proc/get_dice_image(input, diff)
 	var/dat = ""
 	var/span_end = ""
@@ -396,8 +408,11 @@ SUBSYSTEM_DEF(woddices)
 			to_chat(rollperformer, "<b>No dicepool!</b>")
 		return 0
 	var/clan_difficulty = 0
+	var/autosuccesses = 0
 	if(ishuman(rollperformer))
 		var/mob/living/carbon/human/Roller = rollperformer
+		if(Roller.willpower_auto)
+			autosuccesses = 3
 		if(Roller.clane?.name == "Followers of Set")
 			var/datum/vampireclane/setite/Setite = Roller.clane
 			var/turf/T = get_turf(Roller)
@@ -410,19 +425,24 @@ SUBSYSTEM_DEF(woddices)
 					clan_difficulty = 1
 	hardness = clamp(hardness+rollperformer.attributes.diff_curse+clan_difficulty, 1, 10)
 	var/dices_decap = 0
-	if(decap_rolls)
+	if(decap_rolls && !autosuccesses)
 		dices_decap = rollperformer.get_health_difficulty()
 	dices_num = max(1, dices_num-dices_decap)
 	var/wins = 0
 	var/brokes = 0
 	var/result = ""
 	for(var/i in 1 to dices_num)
-		var/roll = rand(1, 10)
-		if(roll == 1)
-			brokes += 1
-		else if(roll >= hardness || roll == 10)
+		if(autosuccesses)
 			wins += 1
-		result += get_dice_image(roll, hardness)
+			result += "<span class='medradio'>⓿</span>"
+			autosuccesses = autosuccesses-1
+		else
+			var/roll = rand(1, 10)
+			if(roll == 1)
+				brokes += 1
+			else if(roll >= hardness || roll == 10)
+				wins += 1
+			result += get_dice_image(roll, hardness)
 	wins = wins-brokes
 	if(!stealthy)
 		to_chat(rollperformer, result)
@@ -701,6 +721,7 @@ SUBSYSTEM_DEF(woddices)
 
 /mob/living/carbon/human
 	var/datum/morality_path/MyPath
+	var/willpower_auto = FALSE
 
 /datum/morality_path
 	var/mob/living/carbon/human/owner
@@ -738,6 +759,15 @@ SUBSYSTEM_DEF(woddices)
 				if("judgement" in H.mind.dharma.tenets)
 					to_chat(H, "<span class='warning'>[owner] is doing something bad, I need to punish them!")
 					H.mind.dharma.judgement |= owner.real_name
+
+	var/special_role_name
+	if(owner.mind)
+		if(owner.mind.special_role)
+			var/datum/antagonist/A = owner.mind.special_role
+			special_role_name = A.name
+
+	if(is_special_character(owner) && special_role_name != "Ambitious")
+		return
 
 	if(ready_events[trig_event] == 1)
 		return FALSE
@@ -1167,9 +1197,25 @@ SUBSYSTEM_DEF(woddices)
 		if ("highspeed")
 			to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span><span class='discosay'> — Больше оборотов, выше скорость, сильнее ветер, и чтобы вдавливаться в столб было не так больно и мучительно!</span>")
 		if ("attacked")
-			to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Success</span> <span class='discosay'> — На тебя напали! Защищайся, как герой! Честь и отвага!</span>")
+			ready_events["attackedfail"] = 1
+			var/replic = rand(1, 3)
+			switch(replic)
+				if(1)
+					to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Success</span> <span class='discosay'> — На тебя напали! Защищайся, как герой! Честь и отвага!</span>")
+				if(2)
+					to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Success</span> <span class='discosay'> — Драка! Перестрелка! Поножовщина! Порно!</span>")
+				if(3)
+					to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Success</span> <span class='discosay'> — Это твой звёздный час, чтобы показать свои боевые навыки.</span>")
 		if ("attackedfail")
-			to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Failure</span> <span class='discosay'> — Знаешь, что я тебе посоветую? Беги, сука, беги!</span>")
+			ready_events["attacked"] = 1
+			var/replic = rand(1, 3)
+			switch(replic)
+				if(1)
+					to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Failure</span> <span class='discosay'> — Я, пожалуй, отойду. Ты тоже, пожалуй, отойди...</span>")
+				if(2)
+					to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Failure</span> <span class='discosay'> — Пережить развод, взять кредит, жить без родителей - это я могу... А это мне не под силу.</span>")
+				if(3)
+					to_chat(owner, "<font size=12>[icon2html('icons/courage.png', owner)]</font> <span class='sciradio'><b>COURAGE</b></span> <span class='info'>Failure</span> <span class='discosay'> — Знаешь, что я тебе посоветую? Беги, сука, беги!</span>")
 
 		//SELF-CONTROL
 		if ("gettingdrunk")
@@ -1228,6 +1274,7 @@ SUBSYSTEM_DEF(woddices)
 		to_chat(owner, "<span class='userdanger'><b>[name] decreased!</b></span>")
 	if(point > 1 && dot < 10)
 		dot = dot+point
+		willpower = willpower+1
 		SEND_SOUND(owner, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
 		to_chat(owner, "<span class='userhelp'><b>[name] increased!</b></span>")
 

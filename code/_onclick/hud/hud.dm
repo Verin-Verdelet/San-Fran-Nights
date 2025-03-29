@@ -55,6 +55,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/throw_icon
 	var/atom/movable/screen/module_store_icon
 	var/atom/movable/screen/static_noise
+	var/atom/movable/screen/ui_announcement
 
 	var/list/static_inventory = list() //the screen objects which are static
 	var/list/toggleable_inventory = list() //the screen objects which can be hidden
