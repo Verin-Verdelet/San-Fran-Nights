@@ -21,7 +21,7 @@ GLOBAL_VAR(command_name)
 	if (GLOB.command_name)
 		return GLOB.command_name
 
-	var/name = "Городской совет"
+	var/name = "City meeting"
 
 	GLOB.command_name = name
 	return name

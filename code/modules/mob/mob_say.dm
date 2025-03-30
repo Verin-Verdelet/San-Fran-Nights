@@ -22,7 +22,7 @@
 	var/flavor = input("Choose your new flavor text:") as text|null
 	if(flavor)
 		if(length(flavor) > 3 * 512)
-			to_chat(src, "Слишкой большой...")
+			to_chat(src, "Too huge...")
 		else
 			flavor_text = trim(copytext_char(sanitize(flavor), 1, 512))
 
