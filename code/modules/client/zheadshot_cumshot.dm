@@ -23,14 +23,14 @@
 			if(features[link_id] == headshot_link)
 				return
 
-			to_chat(user, "Если картинка не отображается в игре должным образом, убедитесь, что это прямая ссылка на изображение, которая правильно открывается в обычном браузере.")
-			to_chat(user, "Имейте в виду, что размер фотографии будет уменьшен до 256x256 пикселей, поэтому чем квадратнее фотография, тем лучше она будет выглядеть.")
+			to_chat(user, "If link doesn't show up, check the link is correct in your browser.")
+			to_chat(user, "Be aware that the size is 256x256 pixels, so the more square it is - the better it shows up.")
 
 			features[link_id] = headshot_link
 
 
 /datum/preferences/proc/get_headshot_link(mob/user, old_link)
-	var/usr_input = input(user, "Вставьте ссылку на изображение: (Для дискорд ссылок попытайтесь в конце, после '&' вставить тип файла. Для примера '&.jpg/.png/.jpeg')", "Headshot Image", old_link) as text|null
+	var/usr_input = input(user, "Insert a link to the image: (For discord links replace '&' with file type. Example '&.jpg/.png/.jpeg')", "Headshot Image", old_link) as text|null
 	if(isnull(usr_input))
 		return ACTION_HEADSHOT_LINK_NOOP
 
@@ -42,20 +42,20 @@
 	var/static/end_regex = regex("(\\.jpg|\\.png|\\.jpeg)$")
 
 	if (length(usr_input) > HEADSHOT_LINK_MAX_LENGTH)
-		to_chat(user, "<span class='warning'>Ссылка слишком большая! Максимальная длина: [HEADSHOT_LINK_MAX_LENGTH] символов!</span>")
+		to_chat(user, "<span class='warning'>Link too big! [HEADSHOT_LINK_MAX_LENGTH] symbols is limit!</span>")
 		return ACTION_HEADSHOT_LINK_NOOP
 
 	if(!findtext(usr_input, link_regex))
-		to_chat(user, "<span class='warning'>Ссылка должна быть не укороченной Gyazo, iBB, E621, Discord ссылкой!</span>")
+		to_chat(user, "<span class='warning'>Link should not be a shortened Gyazo, iBB, E621 or Discord link!</span>")
 		return ACTION_HEADSHOT_LINK_NOOP
 
 	if(!findtext(usr_input, end_regex))
-		to_chat(user, "<span class='warning'>Тебе нужно вставить \".png\", \".jpg\", or \".jpeg\" в конце ссылки!</span>")
+		to_chat(user, "<span class='warning'>You need to insert \".png\", \".jpg\", or \".jpeg\" in the end!</span>")
 		return ACTION_HEADSHOT_LINK_NOOP
 
 	if(findtext(usr_input, nigga))
-		to_chat(usr, "<span class='reallybig'> Ниггер хакерский. Не используй квадратные скобочки. </span>")
-		message_admins("[ADMIN_LOOKUPFLW(usr)] пытался вставить в ХЭДШОТ хуйню с квадратными скобочками")
+		to_chat(usr, "<span class='reallybig'>WE KNOW THIS TRICK. WE KNOW YOUR IP ADRESS, MORON.</span>")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] tried to html-hack headshot link")
 		return ACTION_HEADSHOT_LINK_NOOP
 	var/static/list/repl_chars = list("\n"="#","\t"="#","'"="","\""=""," "="")
 	return trim(usr_input, repl_chars)

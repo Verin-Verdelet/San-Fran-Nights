@@ -176,7 +176,7 @@ var/mob/living/carbon/human/H
 	switch(action)
 		if("login")
 			if(current_card == null)
-				to_chat(usr, "<span class='notice'>Экран тускло мигает. Видимо чего-то не хватает, возможно, кредитной карточки.</span>")
+				to_chat(usr, "<span class='notice'>Screen flicks. Maybe it wants your credit card.</span>")
 				return
 			if(params["code"] == current_card.account.code)
 				logged_in = TRUE

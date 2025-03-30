@@ -290,7 +290,7 @@
 			if(B.bloodiness)
 				collected_blood = collected_blood+1
 				bloodpool = min(bloodpool+round(collected_blood/2), maxbloodpool)
-				visible_message("<span class='warning'>Кровь без следа впитывается в эту массу...")
+				visible_message("<span class='warning'>Blood enters in...")
 				var/turf/T = get_turf(B)
 				if(T)
 					T.wash(CLEAN_WASH)

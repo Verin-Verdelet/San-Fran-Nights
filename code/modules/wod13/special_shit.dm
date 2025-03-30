@@ -139,7 +139,7 @@
 
 /obj/item/drinkable_bloodpack/full/elite
 	name = "\improper elite blood pack (full)"
-	desc = "Путь насытить зверя, если Вы - аристократ"
+	desc = "Way to satisfy your BEAST if you're blue blooded"
 	amount_of_bloodpoints = 4
 
 /obj/item/drinkable_bloodpack/full/vitae
@@ -149,7 +149,7 @@
 
 /obj/item/drinkable_bloodpack/empty
 	name = "\improper drinkable blood pack (empty)"
-	desc = "Пустой пакетик с кровью"
+	desc = "Empty blood pack"
 	icon_state = "blood0"
 	inhand_icon_state = "blood0"
 	empty = TRUE

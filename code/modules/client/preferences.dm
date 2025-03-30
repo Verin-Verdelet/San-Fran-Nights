@@ -2682,7 +2682,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_flavor = input(user, "Choose your character's flavor text:", "Character Preference") as text|null
 					if(new_flavor)
 						if(length(new_flavor) > 3 * 512)
-							to_chat(user, "Слишком большой...")
+							to_chat(user, "Too huge...")
 						else
 							flavor_text = trim(copytext_char(sanitize(new_flavor), 1, 512))
 

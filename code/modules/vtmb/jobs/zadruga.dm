@@ -20,7 +20,7 @@
 //	allowed_bloodlines = list("Old Clan Tzimisce", "Tzimisce")
 	minimal_generation = 13
 
-	duty = "Ты родился в услужении у хозяина поместья: твой отец служил воеводе, как и его отец. Теперь в тебе течет их кровь, а вместе с ней и их обязанности."
+	duty = "You were born in servitude to the Master of the Manor: your father served the Voivode, as did his father. Now, you carry their blood, and with it their responsibilities."
 	experience_addition = 0
 	minimal_masquerade = 2
 	my_contact_is_important = FALSE

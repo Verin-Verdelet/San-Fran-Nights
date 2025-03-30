@@ -1116,7 +1116,7 @@
 				for(var/mob/living/carbon/human/npc/NPC in oviewers(2, user))
 					if(NPC)
 						if(!NPC.CheckMove())
-							NPC.RealisticSay(pick("Фуу!", "Позорище!", "Убирайся!"))
+							NPC.RealisticSay(pick("Eeew!", "Ugly!", "Ugly bitch!"))
 			if(result >= 3)
 				var/i_have_someone_to_fuck = 0
 				for(var/mob/living/carbon/human/npc/NPC in oviewers(2, user))
@@ -1124,7 +1124,7 @@
 						if(!NPC.CheckMove())
 							i_have_someone_to_fuck += 1
 							if(prob(50))
-								NPC.RealisticSay(pick("Так держать!", "Красотища...", "Детка, я твой фанат!"))
+								NPC.RealisticSay(pick("Yeaah!", "Splendid...", "I'm your fan!"))
 							else
 								NPC.emote("clap")
 				if(i_have_someone_to_fuck)
